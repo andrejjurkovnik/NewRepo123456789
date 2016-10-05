@@ -15,9 +15,17 @@ namespace Projectnc1
         public MainWindow()
         {
             InitializeComponent();
+
+
+
+           
+
+           
         }
 
-
+       
+        
+        
 
     }
 
