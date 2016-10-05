@@ -46,7 +46,7 @@ namespace Projectnc1
 
             float[] positions;
             positions = new float[3];
-
+            float[] ppositions = {0,0,0};
 
             foreach (string line in fileContent)
             {
@@ -70,7 +70,35 @@ namespace Projectnc1
 
                 if (currentType == "G00" || currentType == "G01")
                 {
-                    positions = ReadGCode.readG00G01(line);
+                    float[] tmp = ReadGCode.readG00G01(line);
+
+                    if (tmp[0] != -2000000000)
+                    {
+                        positions[0] = tmp[0];
+                    }
+                    else
+                    {
+                        positions[0] = ppositions[0];
+                    }
+
+                    if (tmp[1] != -2000000000)
+                    {
+                        positions[1] = tmp[1];
+                    }
+                    else
+                    {
+                        positions[1] = ppositions[1];
+                    }
+
+                    if (tmp[0] != -2000000000)
+                    {
+                        positions[2] = tmp[2];
+                    }
+                    else
+                    {
+                        positions[2] = ppositions[2];
+                    }
+
 
                 }
 
