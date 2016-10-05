@@ -36,6 +36,7 @@ namespace Projectnc1
         private void btnSelectGFile_Click(object sender, EventArgs e)
         {
             Interpolation3Axis interpolation = new Interpolation3Axis(3);
+            ReadGCode reader = new ReadGCode(3);
 
             // Get G code file path
             openFileDialog.ShowDialog();                                    //Show open file dialog
@@ -71,35 +72,8 @@ namespace Projectnc1
 
                 if (currentType == "G00" || currentType == "G01")
                 {
-                    double[] tmp = ReadGCode.readG00G01(line);
-
-                    if (tmp[0] != -2000000000)
-                    {
-                        positions[0] = tmp[0];
-                    }
-                    else
-                    {
-                        positions[0] = ppositions[0];
-                    }
-
-                    if (tmp[1] != -2000000000)
-                    {
-                        positions[1] = tmp[1];
-                    }
-                    else
-                    {
-                        positions[1] = ppositions[1];
-                    }
-
-                    if (tmp[0] != -2000000000)
-                    {
-                        positions[2] = tmp[2];
-                    }
-                    else
-                    {
-                        positions[2] = ppositions[2];
-                    }
-                    ppositions = positions;
+                    ReadGCode.readG00G01(line);
+                    positions = ReadGCode.positions;
 
                 }
 
