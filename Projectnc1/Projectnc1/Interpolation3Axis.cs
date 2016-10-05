@@ -29,6 +29,7 @@ namespace Projectnc1
             {
                 Axis[i].stepsInstruction = positionToSteps(Axis[i].position, endPosition[i]);//every axis get number of steps to be made
             }
+            SetNewPosition();
         }
 
         public static void rapidPosition(double[] endPosition)
@@ -47,35 +48,20 @@ namespace Projectnc1
                 totalLength = totalLength + (length[i] * length[i]);
             }
             totalLength = Math.Sqrt(totalLength);   //pitagora rule L=sqrt(sum(endPosition[i] - Axis[i].position)^2)
+            if (totalLength != 0)
+            {
+                for (int i = 0; i < numberOfAxis; i++)
+                {
+                    //speed = (endPosition[i] - Axis[i].position) * feed_rate / totalLength....mm/s
+                    //omega = 2 * pi * speed/gear
+                    //omega = omega * 100... MCU is operating with integers and we get more precision that way
+                    Axis[i].speed = Convert.ToInt32((((endPosition[i] - Axis[i].position) * feed_rate / totalLength) / gear * 2 * Math.PI) * 100);
+                    if (Axis[i].speed < 0) Axis[i].speed = -Axis[i].speed;
+                }
+            }
+            SetNewPosition();
         }
 
-        //public static void linearInterpolation(double endPosition1, double endPosition2, double endPosition3)
-        //{
-        //    XAxis.steps = positionToSteps(XAxis.position, endPosition1);
-        //    YAxis.steps = positionToSteps(YAxis.position, endPosition2);
-        //    ZAxis.steps = positionToSteps(ZAxis.position, endPosition3);
-        //    //total length to move
-        //    double L = Math.Sqrt(((endPosition1 - XAxis.position) * (endPosition1 - XAxis.position)) + 
-        //        ((endPosition2 - YAxis.position) * (endPosition2 - YAxis.position)) + ((endPosition3 - ZAxis.position)));
-        //    if (L != 0)
-        //    {
-        //        XAxis.speed = (endPosition1 - XAxis.position) * feed_rate / L;//speed in mm/s
-        //        if (XAxis.speed < 0) XAxis.speed = -XAxis.speed;
-        //        YAxis.speed = (endPosition2 - YAxis.position) * feed_rate / L;//speed in mm/s
-        //        if (YAxis.speed < 0) YAxis.speed = -YAxis.speed;
-        //        ZAxis.speed = (endPosition3 - ZAxis.position) * feed_rate / L;//speed in mm/s
-        //        if (ZAxis.speed < 0) ZAxis.speed = -ZAxis.speed;
-        //    }
-        //    else
-        //    {
-        //        XAxis.speed = 0;
-        //        YAxis.speed = 0;
-        //        ZAxis.speed = 0;
-        //    }
-        //    XAxis.speed = 2 * Math.PI * XAxis.speed / gear;//speed in rad/s
-        //    YAxis.speed = 2 * Math.PI * YAxis.speed / gear;//speed in rad/s
-        //    ZAxis.speed = 2 * Math.PI * ZAxis.speed / gear;//speed in rad/s
-        //}
         public static void circularInterpolationCW()
         {
 
@@ -90,6 +76,14 @@ namespace Projectnc1
             int steps;
             steps = Convert.ToInt32((endPosition - startPosition) * stepsRev / gear);
             return steps;
+        }
+
+        static void SetNewPosition()
+        {
+            for (int i = 0; i < numberOfAxis; i++)
+            {
+                Axis[i].position = Axis[i].position + Axis[i].stepsInstruction / stepsRev * gear;
+            }
         }
     }
 }
