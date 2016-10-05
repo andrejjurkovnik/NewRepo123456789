@@ -5,6 +5,11 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Projectnc1", "Projectnc1\Projectnc1.csproj", "{0558B1A3-55F9-4824-A385-DE0F5A12191B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{421418FA-4FD0-486D-B17B-A9C041A347E1}"
+	ProjectSection(SolutionItems) = preProject
+		Navodila.docx = Navodila.docx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
