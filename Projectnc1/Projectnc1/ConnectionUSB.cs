@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Projectnc1
 {
-    class Connection
+    class ConnectionUSB
     {
+        
     }
 }

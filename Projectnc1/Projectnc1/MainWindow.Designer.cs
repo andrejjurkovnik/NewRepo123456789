@@ -28,76 +28,95 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnReadG = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.fIleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnSelectGFile = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.txtBoxFileSelected = new System.Windows.Forms.TextBox();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // btnReadG
+            // menuStrip
             // 
-            this.btnReadG.Location = new System.Drawing.Point(88, 154);
-            this.btnReadG.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
-            this.btnReadG.Name = "btnReadG";
-            this.btnReadG.Size = new System.Drawing.Size(75, 23);
-            this.btnReadG.TabIndex = 0;
-            this.btnReadG.Text = "button1";
-            this.btnReadG.UseVisualStyleBackColor = true;
-            this.btnReadG.Click += new System.EventHandler(this.button1_Click);
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fIleToolStripMenuItem,
+            this.optionsToolStripMenuItem});
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(1289, 24);
+            this.menuStrip.TabIndex = 3;
+            this.menuStrip.Text = "menuStrip1";
             // 
-            // label1
+            // fIleToolStripMenuItem
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(32, 94);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 17);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "label1";
+            this.fIleToolStripMenuItem.Name = "fIleToolStripMenuItem";
+            this.fIleToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fIleToolStripMenuItem.Text = "FIle";
             // 
-            // checkBox1
+            // optionsToolStripMenuItem
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(88, 193);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(98, 21);
-            this.checkBox1.TabIndex = 2;
-            this.checkBox1.Text = "checkBox1";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Text = "Options";
             // 
-            // label2
+            // panel1
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(27, 110);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(46, 17);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "label2";
+            this.panel1.Location = new System.Drawing.Point(425, 217);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(200, 100);
+            this.panel1.TabIndex = 4;
+            // 
+            // btnSelectGFile
+            // 
+            this.btnSelectGFile.Location = new System.Drawing.Point(12, 35);
+            this.btnSelectGFile.Name = "btnSelectGFile";
+            this.btnSelectGFile.Size = new System.Drawing.Size(75, 23);
+            this.btnSelectGFile.TabIndex = 5;
+            this.btnSelectGFile.Text = "Select G file ...";
+            this.btnSelectGFile.UseVisualStyleBackColor = true;
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // txtBoxFileSelected
+            // 
+            this.txtBoxFileSelected.Location = new System.Drawing.Point(135, 35);
+            this.txtBoxFileSelected.Name = "txtBoxFileSelected";
+            this.txtBoxFileSelected.Size = new System.Drawing.Size(173, 20);
+            this.txtBoxFileSelected.TabIndex = 6;
+            this.txtBoxFileSelected.Text = "Please select G file ...";
             // 
             // MainWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1719, 875);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnReadG);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ClientSize = new System.Drawing.Size(1289, 711);
+            this.Controls.Add(this.txtBoxFileSelected);
+            this.Controls.Add(this.btnSelectGFile);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.menuStrip);
+            this.MainMenuStrip = this.menuStrip;
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainWindow";
             this.Text = "CNC";
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnReadG;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.ToolStripMenuItem fIleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btnSelectGFile;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.TextBox txtBoxFileSelected;
     }
 }
 

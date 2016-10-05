@@ -17,11 +17,9 @@ namespace Projectnc1
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Code is running !");
-            btnReadG.Enabled = false;
-            this.Close();
-        }
+
+
     }
+
+
 }

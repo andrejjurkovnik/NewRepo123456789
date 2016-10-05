@@ -8,5 +8,7 @@ namespace Projectnc1
 {
     class Motor
     {
+
+        public int stevilo = 5;
     }
 }
