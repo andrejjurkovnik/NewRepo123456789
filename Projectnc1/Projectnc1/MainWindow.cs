@@ -99,7 +99,7 @@ namespace Projectnc1
                     {
                         positions[2] = ppositions[2];
                     }
-
+                    ppositions = positions;
 
                 }
 

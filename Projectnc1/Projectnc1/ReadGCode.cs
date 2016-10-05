@@ -47,6 +47,7 @@ namespace Projectnc1
             else
             {
                 values[0] = -2000000000;
+                values[0] = Interpolation3Axis.Axis[0].position;
             }
 
             //Searches for Y value
