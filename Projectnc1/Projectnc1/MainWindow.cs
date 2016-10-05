@@ -45,17 +45,17 @@ namespace Projectnc1
             fileContent = File.ReadAllLines(@filePath);
             
 
-            foreach (string s in fileContent)
+            foreach (string line in fileContent)
             {
                 //Convert to upper
-                s.ToUpper();
+                line.ToUpper();
 
                 //Replace comma with dot
-                s.Replace(",", ".");
+                line.Replace(",", ".");
 
                 //Find X movement
                 Regex regexX = new Regex("[X][0-9]?[0-9]?[0-9]?.?[0-9]?[0-9]");  //Regular expresion of X movement
-                Match matchX = regexX.Match(s);
+                Match matchX = regexX.Match(line);
                 testTextbox.AppendText("X movements  ");
                 if (matchX.Success)
                 {
@@ -69,7 +69,7 @@ namespace Projectnc1
 
                 //Find Y movement
                 Regex regexY = new Regex("[Y][0-9]?.?[0-9]?[0-9]");  //Regular expresion of X movement
-                Match matchY = regexY.Match(s);
+                Match matchY = regexY.Match(line);
                 testTextbox.AppendText("Y movements  ");
                 if (matchY.Success)
                 {
@@ -81,7 +81,7 @@ namespace Projectnc1
                 }
                 //Find Z movement
                 Regex regexZ = new Regex("[Z][0-9]?.?[0-9]?[0-9]");  //Regular expresion of X movement
-                Match matchZ = regexZ.Match(s);
+                Match matchZ = regexZ.Match(line);
                 testTextbox.AppendText("Z movements  ");
                 if (matchZ.Success)
                 {
