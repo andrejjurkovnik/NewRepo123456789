@@ -43,7 +43,10 @@ namespace Projectnc1
 
             //Read all lines
             fileContent = File.ReadAllLines(@filePath);
-            
+
+            float[] positions;
+            positions = new float[3];
+
 
             foreach (string line in fileContent)
             {
@@ -53,50 +56,26 @@ namespace Projectnc1
                 //Replace comma with dot
                 line.Replace(",", ".");
 
-                //Find X movement
 
-                Regex regexX = new Regex("[X][0-9]?[0-9]?[0-9]?[0-9]?[0-9]?.?[0-9]?[0-9]?[0-9]?[0-9]?[0-9]");  //Regular expresion of X movement
-                Match matchX = regexX.Match(line);
+                string currentType = "G00";
+                string returnType = ReadGCode.getCommandType(line);
 
-                testTextbox.AppendText("X movements  ");
-                if (matchX.Success)
+                
+
+                if (returnType == "previous")
                 {
-                    testTextbox.AppendText(float.Parse(matchX.Value.Replace("X", ""), CultureInfo.InvariantCulture.NumberFormat).ToString() + Environment.NewLine);
-                }
-                else
-                {
-                    testTextbox.AppendText("0" + Environment.NewLine);
+                    currentType = returnType;
                 }
 
 
-                //Find Y movement
-                Regex regexY = new Regex("[Y][0-9]?[0-9]?[0-9]?[0-9]?[0-9]?.?[0-9]?[0-9]?[0-9]?[0-9]?[0-9]");  //Regular expresion of X movement
-                Match matchY = regexY.Match(line);
-                testTextbox.AppendText("Y movements  ");
-                if (matchY.Success)
+                if (currentType == "G00" || currentType == "G01")
                 {
-                    testTextbox.AppendText(float.Parse(matchY.Value.Replace("Y", ""), CultureInfo.InvariantCulture.NumberFormat).ToString() + Environment.NewLine);
-                }
-                else
-                {
-                    testTextbox.AppendText("0" + Environment.NewLine);
-                }
-                //Find Z movement
-                Regex regexZ = new Regex("[Z][0-9]?[0-9]?[0-9]?[0-9]?[0-9]?.?[0-9]?[0-9]?[0-9]?[0-9]?[0-9]");  //Regular expresion of X movement
-                Match matchZ = regexZ.Match(line);
-                testTextbox.AppendText("Z movements  ");
-                if (matchZ.Success)
-                {
-                    testTextbox.AppendText(float.Parse(matchZ.Value.Replace("Z", ""), CultureInfo.InvariantCulture.NumberFormat).ToString() + Environment.NewLine);
-                }
-                else
-                {
-                    testTextbox.AppendText("0" + Environment.NewLine);
+                    positions = ReadGCode.readG00G01(line);
+
                 }
 
-                testTextbox.AppendText("----------------------" +Environment.NewLine);
+
             }
-
 
 
           
