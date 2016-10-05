@@ -21,7 +21,7 @@ namespace Projectnc1
         /// </summary>
         string filePath = "";
         string[] fileContent;
-        float[][] Movements;
+        double[][] Movements;
 
         public MainWindow()
         {
@@ -44,9 +44,9 @@ namespace Projectnc1
             //Read all lines
             fileContent = File.ReadAllLines(@filePath);
 
-            float[] positions;
-            positions = new float[3];
-            float[] ppositions = {0,0,0};
+            double[] positions;
+            positions = new double[3];
+            double[] ppositions = {0,0,0};
 
             foreach (string line in fileContent)
             {
@@ -70,7 +70,7 @@ namespace Projectnc1
 
                 if (currentType == "G00" || currentType == "G01")
                 {
-                    float[] tmp = ReadGCode.readG00G01(line);
+                    double[] tmp = ReadGCode.readG00G01(line);
 
                     if (tmp[0] != -2000000000)
                     {
