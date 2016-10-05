@@ -38,7 +38,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnSelectGFile = new System.Windows.Forms.Button();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.txtBoxFileSelected = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -46,6 +46,7 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.button1 = new System.Windows.Forms.Button();
+            this.testTextbox = new System.Windows.Forms.TextBox();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -117,7 +118,7 @@
             this.panel1.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel1.Location = new System.Drawing.Point(12, 64);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1114, 435);
+            this.panel1.Size = new System.Drawing.Size(684, 435);
             this.panel1.TabIndex = 4;
             // 
             // btnSelectGFile
@@ -128,10 +129,11 @@
             this.btnSelectGFile.TabIndex = 5;
             this.btnSelectGFile.Text = "Select G file ...";
             this.btnSelectGFile.UseVisualStyleBackColor = true;
+            this.btnSelectGFile.Click += new System.EventHandler(this.btnSelectGFile_Click);
             // 
-            // openFileDialog1
+            // openFileDialog
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog.FileName = "openFileDialog";
             // 
             // txtBoxFileSelected
             // 
@@ -198,11 +200,20 @@
             this.button1.Text = "Connect to the device";
             this.button1.UseVisualStyleBackColor = true;
             // 
+            // testTextbox
+            // 
+            this.testTextbox.Location = new System.Drawing.Point(720, 35);
+            this.testTextbox.Multiline = true;
+            this.testTextbox.Name = "testTextbox";
+            this.testTextbox.Size = new System.Drawing.Size(406, 464);
+            this.testTextbox.TabIndex = 12;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1138, 529);
+            this.Controls.Add(this.testTextbox);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.radioButton1);
@@ -230,7 +241,7 @@
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnSelectGFile;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.TextBox txtBoxFileSelected;
         private System.Windows.Forms.ToolStripMenuItem selectGFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
@@ -243,6 +254,7 @@
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox testTextbox;
     }
 }
 
