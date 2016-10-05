@@ -119,7 +119,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel1.Location = new System.Drawing.Point(16, 79);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(912, 535);
             this.panel1.TabIndex = 4;
@@ -127,7 +127,7 @@
             // btnSelectGFile
             // 
             this.btnSelectGFile.Location = new System.Drawing.Point(16, 43);
-            this.btnSelectGFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSelectGFile.Margin = new System.Windows.Forms.Padding(4);
             this.btnSelectGFile.Name = "btnSelectGFile";
             this.btnSelectGFile.Size = new System.Drawing.Size(100, 28);
             this.btnSelectGFile.TabIndex = 5;
@@ -142,7 +142,7 @@
             // txtBoxFileSelected
             // 
             this.txtBoxFileSelected.Location = new System.Drawing.Point(185, 43);
-            this.txtBoxFileSelected.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxFileSelected.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxFileSelected.Name = "txtBoxFileSelected";
             this.txtBoxFileSelected.Size = new System.Drawing.Size(229, 22);
             this.txtBoxFileSelected.TabIndex = 6;
@@ -183,7 +183,7 @@
             this.radioButton1.AutoSize = true;
             this.radioButton1.Checked = true;
             this.radioButton1.Location = new System.Drawing.Point(596, 42);
-            this.radioButton1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButton1.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(57, 21);
             this.radioButton1.TabIndex = 10;
@@ -195,7 +195,7 @@
             // 
             this.radioButton2.AutoSize = true;
             this.radioButton2.Location = new System.Drawing.Point(667, 43);
-            this.radioButton2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButton2.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(83, 21);
             this.radioButton2.TabIndex = 10;
@@ -205,7 +205,7 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(787, 41);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(164, 28);
             this.button1.TabIndex = 11;
@@ -215,7 +215,7 @@
             // testTextbox
             // 
             this.testTextbox.Location = new System.Drawing.Point(960, 43);
-            this.testTextbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.testTextbox.Margin = new System.Windows.Forms.Padding(4);
             this.testTextbox.Multiline = true;
             this.testTextbox.Name = "testTextbox";
             this.testTextbox.Size = new System.Drawing.Size(540, 570);

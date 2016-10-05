@@ -12,17 +12,10 @@ namespace Projectnc1
     {
 
         static public double[] positions;
-        static public double[] ppositions;
 
         public ReadGCode(int stMotirjev)
         {
             positions = new double[stMotirjev];
-            ppositions = new double[stMotirjev];
-
-            for (int i = 0; i < stMotirjev; i++)
-            {
-                ppositions[i] = 0;
-            }
         }
 
         static public string getCommandType(string line)
@@ -43,11 +36,9 @@ namespace Projectnc1
 
         }
 
-
-
         static public double[] readG00G01(string line)
         {
-            double[] values;
+            double[] values;//what is the point of that, function can be void!
             values = new double[3];
 
             //Searches for X value
@@ -57,43 +48,37 @@ namespace Projectnc1
             if (matchX.Success)                          //If search was successful return value else return string "previous"
             {
                 positions[0] = double.Parse(matchX.Value.Replace("X",""), CultureInfo.InvariantCulture.NumberFormat);
-                ppositions[0] = positions[0];
             }
             else
             {
-                //positions[0] = ppositions[0];
                 positions[0] = Interpolation3Axis.Axis[0].position;
             }
 
             //Searches for Y value
-            Regex regexY = new Regex("[Y][0-9]?[0-9]?[0-9]?[0-9]?[0-9]?.?[0-9]?[0-9]?[0-9]?[0-9]?[0-9]");  //Regular expresion of X movement
+            Regex regexY = new Regex("[Y][0-9]?[0-9]?[0-9]?[0-9]?[0-9]?.?[0-9]?[0-9]?[0-9]?[0-9]?[0-9]");  //Regular expresion of Y movement
             Match matchY = regexY.Match(line);
 
             if (matchY.Success)                          //If search was successful return value else return string "previous"
             {
                 positions[1] = double.Parse(matchY.Value.Replace("Y", ""), CultureInfo.InvariantCulture.NumberFormat);
-                ppositions[1] = positions[1];
             }
             else
             {
-                positions[1] = ppositions[1];
+                positions[1] = Interpolation3Axis.Axis[1].position;
             }
 
             //Searches for Z value
-            Regex regexZ = new Regex("[Z][0-9]?[0-9]?[0-9]?[0-9]?[0-9]?.?[0-9]?[0-9]?[0-9]?[0-9]?[0-9]");  //Regular expresion of X movement
+            Regex regexZ = new Regex("[Z][0-9]?[0-9]?[0-9]?[0-9]?[0-9]?.?[0-9]?[0-9]?[0-9]?[0-9]?[0-9]");  //Regular expresion of Z movement
             Match matchZ = regexZ.Match(line);
 
             if (matchZ.Success)                          //If search was successful return value else return string "previous"
             {
                 positions[2] = double.Parse(matchZ.Value.Replace("Z", ""), CultureInfo.InvariantCulture.NumberFormat);
-                ppositions[2] = positions[2];
             }
             else
             {
-                positions[2] = ppositions[2];
+                positions[2] = Interpolation3Axis.Axis[2].position;
             }
-
-
             return values;
 
         }

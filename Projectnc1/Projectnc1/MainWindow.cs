@@ -59,22 +59,31 @@ namespace Projectnc1
                 line.Replace(",", ".");
 
 
-                string currentType = "G00";
-                string returnType = ReadGCode.getCommandType(line);
+                string currentCommand = "G00";
+                string returnCommandType = ReadGCode.getCommandType(line);
 
                 
 
-                if (returnType == "previous")
+                if (returnCommandType == "previous")
                 {
-                    currentType = returnType;
+                    currentCommand = returnCommandType;
                 }
 
-
-                if (currentType == "G00" || currentType == "G01")
+                switch (currentCommand)
                 {
-                    ReadGCode.readG00G01(line);
-                    positions = ReadGCode.positions;
-                    testTextbox.Text = Convert.ToString(positions[0]);
+                    case "G00":
+                        ReadGCode.readG00G01(line);
+                        positions = ReadGCode.positions;
+                        Interpolation3Axis.rapidPositioning(positions);
+                        //send data
+                        break;
+                    case "G01":
+                        ReadGCode.readG00G01(line);
+                        positions = ReadGCode.positions;
+                        Interpolation3Axis.linearInterpolation(positions);
+                        break;
+                    default:
+                        break;
                 }
 
 

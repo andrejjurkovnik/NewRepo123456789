@@ -23,6 +23,11 @@ namespace Projectnc1
             }
         }
 
+        public static void testChange()
+        {
+            Axis[0].position = 32.452;
+        }
+
         public static void rapidPositioning(double[] endPosition)
         {
             for (int i = 0; i < numberOfAxis; i++)
@@ -32,10 +37,8 @@ namespace Projectnc1
             SetNewPosition();
         }
 
-        public static void rapidPosition(double[] endPosition)
+        public static void linearInterpolation(double[] endPosition)
         {
-            rapidPosition(endPosition);              //set number of steps to move
-
             double[] length;
             length = new double[numberOfAxis];      //length of one move of one axis
             double totalLength = 0;
@@ -59,7 +62,7 @@ namespace Projectnc1
                     if (Axis[i].speed < 0) Axis[i].speed = -Axis[i].speed;
                 }
             }
-            SetNewPosition();
+            rapidPositioning(endPosition);              //set number of steps to move
         }
 
         public static void circularInterpolationCW()
@@ -82,7 +85,7 @@ namespace Projectnc1
         {
             for (int i = 0; i < numberOfAxis; i++)
             {
-                Axis[i].position = Axis[i].position + (Axis[i].stepsInstruction / stepsRev * gear);
+                Axis[i].position = Axis[i].position + (Convert.ToDouble(Axis[i].stepsInstruction) / Convert.ToDouble(stepsRev) * Convert.ToDouble(gear));
             }
         }
     }

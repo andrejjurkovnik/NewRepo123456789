@@ -8,7 +8,7 @@ namespace Projectnc1
 {
     class Motor
     {
-        public float position;      //Current position
+        public double position;      //Current position
         public int[] steps;         //Number of steps to move
         public int stepsInstruction;
         public int acceleration;
