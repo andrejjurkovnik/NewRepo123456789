@@ -72,7 +72,8 @@ namespace Projectnc1
 
                 if (currentType == "G00" || currentType == "G01")
                 {
-                    positions = ReadGCode.readG00G01(line);
+                    ReadGCode.readG00G01(line);
+                    positions = ReadGCode.positions;
 
                 }
 
