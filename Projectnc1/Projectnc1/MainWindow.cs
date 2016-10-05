@@ -21,7 +21,7 @@ namespace Projectnc1
         /// </summary>
         string filePath = "";
         string[] fileContent;
-        float[][] Movements;
+        double[][] Movements;
 
         public MainWindow()
         {
@@ -47,7 +47,7 @@ namespace Projectnc1
 
             double[] positions;
             positions = new double[3];
-
+            double[] ppositions = {0,0,0};
 
             foreach (string line in fileContent)
             {
@@ -71,13 +71,35 @@ namespace Projectnc1
 
                 if (currentType == "G00" || currentType == "G01")
                 {
-                    positions = ReadGCode.readG00G01(line);
-                    Interpolation3Axis.rapidPositioning(positions);
+                    double[] tmp = ReadGCode.readG00G01(line);
 
-                    //testTextbox.Text = Convert.ToString(Interpolation3Axis.Axis[0].stepsInstruction);
-                    testTextbox.Text = testTextbox.Text + Environment.NewLine + Convert.ToString(Interpolation3Axis.Axis[0].position);
-                    testTextbox.Text = testTextbox.Text + Environment.NewLine + Convert.ToString(Interpolation3Axis.Axis[1].position);
-                    testTextbox.Text = testTextbox.Text + Environment.NewLine + Convert.ToString(Interpolation3Axis.Axis[2].position);
+                    if (tmp[0] != -2000000000)
+                    {
+                        positions[0] = tmp[0];
+                    }
+                    else
+                    {
+                        positions[0] = ppositions[0];
+                    }
+
+                    if (tmp[1] != -2000000000)
+                    {
+                        positions[1] = tmp[1];
+                    }
+                    else
+                    {
+                        positions[1] = ppositions[1];
+                    }
+
+                    if (tmp[0] != -2000000000)
+                    {
+                        positions[2] = tmp[2];
+                    }
+                    else
+                    {
+                        positions[2] = ppositions[2];
+                    }
+
 
                 }
 

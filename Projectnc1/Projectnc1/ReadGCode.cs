@@ -31,10 +31,10 @@ namespace Projectnc1
 
 
 
-        static public float[] readG00G01(string line)
+        static public double[] readG00G01(string line)
         {
-            float[] values;
-            values = new float[3];
+            double[] values;
+            values = new double[3];
 
             //Searches for X value
             Regex regexX = new Regex("[X][0-9]?[0-9]?[0-9]?[0-9]?[0-9]?.?[0-9]?[0-9]?[0-9]?[0-9]?[0-9]");  //Regular expresion of X movement
@@ -42,11 +42,11 @@ namespace Projectnc1
 
             if (matchX.Success)                          //If search was successful return value else return string "previous"
             {
-                values[0] = float.Parse(matchX.Value.Replace("X",""), CultureInfo.InvariantCulture.NumberFormat);
+                values[0] = double.Parse(matchX.Value, CultureInfo.InvariantCulture.NumberFormat);
             }
             else
             {
-                values[0] = -2000000000f;
+                values[0] = -2000000000;
             }
 
             //Searches for Y value
@@ -55,24 +55,24 @@ namespace Projectnc1
 
             if (matchY.Success)                          //If search was successful return value else return string "previous"
             {
-                values[1] = float.Parse(matchY.Value.Replace("Y", ""), CultureInfo.InvariantCulture.NumberFormat);
+                values[1] = double.Parse(matchY.Value, CultureInfo.InvariantCulture.NumberFormat);
             }
             else
             {
-                values[1] = -2000000000f;
+                values[1] = -2000000000;
             }
 
             //Searches for Z value
             Regex regexZ = new Regex("[Z][0-9]?[0-9]?[0-9]?[0-9]?[0-9]?.?[0-9]?[0-9]?[0-9]?[0-9]?[0-9]");  //Regular expresion of X movement
-            Match matchZ = regexZ.Match(line);
+            Match matchZ = regexX.Match(line);
 
             if (matchZ.Success)                          //If search was successful return value else return string "previous"
             {
-                values[2] = float.Parse(matchZ.Value.Replace("Z", ""), CultureInfo.InvariantCulture.NumberFormat);
+                values[3] = double.Parse(matchZ.Value, CultureInfo.InvariantCulture.NumberFormat);
             }
             else
             {
-                values[2] = -2000000000f;
+                values[3] = -2000000000;
             }
 
 
