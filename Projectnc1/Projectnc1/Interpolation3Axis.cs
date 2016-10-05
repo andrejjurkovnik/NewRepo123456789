@@ -12,7 +12,7 @@ namespace Projectnc1
         static int stepsRev = 800;//number of steps per revolution
         static int gear = 5;//gear ratio - 5mm/rev
         static int numberOfAxis = 0;
-        static Motor[] Axis = new Motor[8];
+        static public Motor[] Axis = new Motor[8];
 
         public Interpolation3Axis(int numOfAxis)
         {
@@ -71,7 +71,7 @@ namespace Projectnc1
 
         }
         
-        static int positionToSteps(float startPosition, double endPosition)
+        static int positionToSteps(double startPosition, double endPosition)
         {
             int steps;
             steps = Convert.ToInt32((endPosition - startPosition) * stepsRev / gear);
@@ -82,7 +82,7 @@ namespace Projectnc1
         {
             for (int i = 0; i < numberOfAxis; i++)
             {
-                Axis[i].position = Axis[i].position + Axis[i].stepsInstruction / stepsRev * gear;
+                Axis[i].position = Axis[i].position + (Axis[i].stepsInstruction / stepsRev * gear);
             }
         }
     }

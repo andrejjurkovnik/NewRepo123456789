@@ -42,7 +42,7 @@ namespace Projectnc1
 
             if (matchX.Success)                          //If search was successful return value else return string "previous"
             {
-                values[0] = float.Parse(matchX.Value, CultureInfo.InvariantCulture.NumberFormat);
+                values[0] = float.Parse(matchX.Value.Replace("X",""), CultureInfo.InvariantCulture.NumberFormat);
             }
             else
             {
@@ -55,7 +55,7 @@ namespace Projectnc1
 
             if (matchY.Success)                          //If search was successful return value else return string "previous"
             {
-                values[1] = float.Parse(matchY.Value, CultureInfo.InvariantCulture.NumberFormat);
+                values[1] = float.Parse(matchY.Value.Replace("Y", ""), CultureInfo.InvariantCulture.NumberFormat);
             }
             else
             {
@@ -64,15 +64,15 @@ namespace Projectnc1
 
             //Searches for Z value
             Regex regexZ = new Regex("[Z][0-9]?[0-9]?[0-9]?[0-9]?[0-9]?.?[0-9]?[0-9]?[0-9]?[0-9]?[0-9]");  //Regular expresion of X movement
-            Match matchZ = regexX.Match(line);
+            Match matchZ = regexZ.Match(line);
 
             if (matchZ.Success)                          //If search was successful return value else return string "previous"
             {
-                values[3] = float.Parse(matchZ.Value, CultureInfo.InvariantCulture.NumberFormat);
+                values[2] = float.Parse(matchZ.Value.Replace("Z", ""), CultureInfo.InvariantCulture.NumberFormat);
             }
             else
             {
-                values[3] = -2000000000f;
+                values[2] = -2000000000f;
             }
 
 

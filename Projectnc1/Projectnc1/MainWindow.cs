@@ -35,6 +35,7 @@ namespace Projectnc1
 
         private void btnSelectGFile_Click(object sender, EventArgs e)
         {
+            Interpolation3Axis interpolation = new Interpolation3Axis(3);
 
             // Get G code file path
             openFileDialog.ShowDialog();                                    //Show open file dialog
@@ -44,8 +45,8 @@ namespace Projectnc1
             //Read all lines
             fileContent = File.ReadAllLines(@filePath);
 
-            float[] positions;
-            positions = new float[3];
+            double[] positions;
+            positions = new double[3];
 
 
             foreach (string line in fileContent)
@@ -71,6 +72,12 @@ namespace Projectnc1
                 if (currentType == "G00" || currentType == "G01")
                 {
                     positions = ReadGCode.readG00G01(line);
+                    Interpolation3Axis.rapidPositioning(positions);
+
+                    //testTextbox.Text = Convert.ToString(Interpolation3Axis.Axis[0].stepsInstruction);
+                    testTextbox.Text = testTextbox.Text + Environment.NewLine + Convert.ToString(Interpolation3Axis.Axis[0].position);
+                    testTextbox.Text = testTextbox.Text + Environment.NewLine + Convert.ToString(Interpolation3Axis.Axis[1].position);
+                    testTextbox.Text = testTextbox.Text + Environment.NewLine + Convert.ToString(Interpolation3Axis.Axis[2].position);
 
                 }
 
