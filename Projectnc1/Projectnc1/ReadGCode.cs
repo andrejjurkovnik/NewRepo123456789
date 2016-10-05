@@ -1,70 +1,88 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Projectnc1
 {
     class ReadGCode
     {
-        static string currentMode = "";
 
-        static public float[] readGCodeLine(string line)
+        static public string getCommandType(string line)
         {
-            float[] movements = {0,0,0};
-            currentMode = getMode(line);
-            System.Windows.Forms.MessageBox.Show("Napaka!!");
-            switch (currentMode)
-            {
-                case "G00":
-                    
-                    break;
-                case "G01":
-                    break;
-                case "G02":
-                    break;
-                case "G03":
-                    break;
-                default:
-                    System.Windows.Forms.MessageBox.Show("Unable to read G code command type", "Error",System.Windows.Forms.MessageBoxButtons.OK,System.Windows.Forms.MessageBoxIcon.Error);
-                    break;
-            }
 
-            return movements;
-        }
+            Regex Gtype = new Regex("[G][0-9][0-9]");       //Regular expresion for serching G.... 
+            Match GtypeMatch = Gtype.Match(line);           //Searches for pateren
 
-        /// <summary>
-        /// From G code line exstract movement type
-        /// </summary>
-        /// <param name="line">G code line</param>
-        static string getMode(string line)
-        {
-            //Checks what type of the command line contains
-            if (line.Contains("G00"))
+            if(GtypeMatch.Success)                          //If search was successful return value else return string "previous"
             {
-                currentMode = "G00";
-            }
-            else if (line.Contains("G01"))
-            {
-                currentMode = "G01";
-            }
-            else if (line.Contains("G02"))
-            {
-                currentMode = "G02";
-            }
-            else if (line.Contains("G03"))
-            {
-                currentMode = "G03";
+                return GtypeMatch.Value;
             }
             else
             {
-              
+                return "previous";
             }
-            return currentMode;  
+
+
         }
 
 
 
+        static public float[] readG00G01(string line)
+        {
+            float[] values;
+            values = new float[3];
+
+            //Searches for X value
+            Regex regexX = new Regex("[X][0-9]?[0-9]?[0-9]?[0-9]?[0-9]?.?[0-9]?[0-9]?[0-9]?[0-9]?[0-9]");  //Regular expresion of X movement
+            Match matchX = regexX.Match(line);
+
+            if (matchX.Success)                          //If search was successful return value else return string "previous"
+            {
+                values[0] = float.Parse(matchX.Value, CultureInfo.InvariantCulture.NumberFormat);
+            }
+            else
+            {
+                values[0] = -2000000000f;
+            }
+
+            //Searches for Y value
+            Regex regexY = new Regex("[Y][0-9]?[0-9]?[0-9]?[0-9]?[0-9]?.?[0-9]?[0-9]?[0-9]?[0-9]?[0-9]");  //Regular expresion of X movement
+            Match matchY = regexY.Match(line);
+
+            if (matchY.Success)                          //If search was successful return value else return string "previous"
+            {
+                values[1] = float.Parse(matchY.Value, CultureInfo.InvariantCulture.NumberFormat);
+            }
+            else
+            {
+                values[1] = -2000000000f;
+            }
+
+            //Searches for Z value
+            Regex regexZ = new Regex("[Z][0-9]?[0-9]?[0-9]?[0-9]?[0-9]?.?[0-9]?[0-9]?[0-9]?[0-9]?[0-9]");  //Regular expresion of X movement
+            Match matchZ = regexX.Match(line);
+
+            if (matchZ.Success)                          //If search was successful return value else return string "previous"
+            {
+                values[3] = float.Parse(matchZ.Value, CultureInfo.InvariantCulture.NumberFormat);
+            }
+            else
+            {
+                values[3] = -2000000000f;
+            }
+
+
+            return values;
+
+        }
+
+        
+
+
+        
     }
 }
