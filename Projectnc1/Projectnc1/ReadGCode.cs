@@ -61,7 +61,8 @@ namespace Projectnc1
             }
             else
             {
-                positions[0] = ppositions[0];
+                //positions[0] = ppositions[0];
+                positions[0] = Interpolation3Axis.Axis[0].position;
             }
 
             //Searches for Y value

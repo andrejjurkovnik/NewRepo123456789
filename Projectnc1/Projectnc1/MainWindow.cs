@@ -74,7 +74,7 @@ namespace Projectnc1
                 {
                     ReadGCode.readG00G01(line);
                     positions = ReadGCode.positions;
-
+                    testTextbox.Text = Convert.ToString(positions[0]);
                 }
 
 
