@@ -11,6 +11,20 @@ namespace Projectnc1
     class ReadGCode
     {
 
+        static public double[] positions;
+        static public double[] ppositions;
+
+        public ReadGCode(int stMotirjev)
+        {
+            positions = new double[stMotirjev];
+            ppositions = new double[stMotirjev];
+
+            for (int i = 0; i < stMotirjev; i++)
+            {
+                ppositions[i] = 0;
+            }
+        }
+
         static public string getCommandType(string line)
         {
 
@@ -42,11 +56,12 @@ namespace Projectnc1
 
             if (matchX.Success)                          //If search was successful return value else return string "previous"
             {
-                values[0] = double.Parse(matchX.Value.Replace("X",""), CultureInfo.InvariantCulture.NumberFormat);
+                positions[0] = double.Parse(matchX.Value.Replace("X",""), CultureInfo.InvariantCulture.NumberFormat);
+                ppositions[0] = positions[0];
             }
             else
             {
-                values[0] = -2000000000;
+                positions[0] = ppositions[0];
             }
 
             //Searches for Y value
@@ -55,11 +70,12 @@ namespace Projectnc1
 
             if (matchY.Success)                          //If search was successful return value else return string "previous"
             {
-                values[1] = double.Parse(matchY.Value.Replace("Y", ""), CultureInfo.InvariantCulture.NumberFormat);
+                positions[1] = double.Parse(matchY.Value.Replace("Y", ""), CultureInfo.InvariantCulture.NumberFormat);
+                ppositions[1] = positions[1];
             }
             else
             {
-                values[1] = -2000000000;
+                positions[1] = ppositions[1];
             }
 
             //Searches for Z value
@@ -68,11 +84,12 @@ namespace Projectnc1
 
             if (matchZ.Success)                          //If search was successful return value else return string "previous"
             {
-                values[2] = double.Parse(matchZ.Value.Replace("Z", ""), CultureInfo.InvariantCulture.NumberFormat);
+                positions[2] = double.Parse(matchZ.Value.Replace("Z", ""), CultureInfo.InvariantCulture.NumberFormat);
+                ppositions[2] = positions[2];
             }
             else
             {
-                values[2] = -2000000000;
+                positions[2] = ppositions[2];
             }
 
 
