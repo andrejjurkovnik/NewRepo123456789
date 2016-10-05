@@ -54,8 +54,10 @@ namespace Projectnc1
                 line.Replace(",", ".");
 
                 //Find X movement
-                Regex regexX = new Regex("[X][0-9]?[0-9]?[0-9]?.?[0-9]?[0-9]");  //Regular expresion of X movement
+
+                Regex regexX = new Regex("[X][0-9]?[0-9]?[0-9]?[0-9]?[0-9]?.?[0-9]?[0-9]?[0-9]?[0-9]?[0-9]");  //Regular expresion of X movement
                 Match matchX = regexX.Match(line);
+
                 testTextbox.AppendText("X movements  ");
                 if (matchX.Success)
                 {
@@ -68,7 +70,7 @@ namespace Projectnc1
 
 
                 //Find Y movement
-                Regex regexY = new Regex("[Y][0-9]?.?[0-9]?[0-9]");  //Regular expresion of X movement
+                Regex regexY = new Regex("[Y][0-9]?[0-9]?[0-9]?[0-9]?[0-9]?.?[0-9]?[0-9]?[0-9]?[0-9]?[0-9]");  //Regular expresion of X movement
                 Match matchY = regexY.Match(line);
                 testTextbox.AppendText("Y movements  ");
                 if (matchY.Success)
@@ -80,7 +82,7 @@ namespace Projectnc1
                     testTextbox.AppendText("0" + Environment.NewLine);
                 }
                 //Find Z movement
-                Regex regexZ = new Regex("[Z][0-9]?.?[0-9]?[0-9]");  //Regular expresion of X movement
+                Regex regexZ = new Regex("[Z][0-9]?[0-9]?[0-9]?[0-9]?[0-9]?.?[0-9]?[0-9]?[0-9]?[0-9]?[0-9]");  //Regular expresion of X movement
                 Match matchZ = regexZ.Match(line);
                 testTextbox.AppendText("Z movements  ");
                 if (matchZ.Success)
