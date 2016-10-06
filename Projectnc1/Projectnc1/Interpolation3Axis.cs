@@ -23,11 +23,6 @@ namespace Projectnc1
             }
         }
 
-        public static void testChange()
-        {
-            Axis[0].position = 32.452;
-        }
-
         public static void rapidPositioning(double[] endPosition)
         {
             for (int i = 0; i < numberOfAxis; i++)

@@ -47,6 +47,7 @@
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.button1 = new System.Windows.Forms.Button();
             this.testTextbox = new System.Windows.Forms.TextBox();
+            this.setUSBConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,6 +88,8 @@
             // 
             // optionsToolStripMenuItem
             // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.setUSBConnectionToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(96, 24);
             this.optionsToolStripMenuItem.Text = "Connection";
@@ -221,6 +224,12 @@
             this.testTextbox.Size = new System.Drawing.Size(540, 570);
             this.testTextbox.TabIndex = 12;
             // 
+            // setUSBConnectionToolStripMenuItem
+            // 
+            this.setUSBConnectionToolStripMenuItem.Name = "setUSBConnectionToolStripMenuItem";
+            this.setUSBConnectionToolStripMenuItem.Size = new System.Drawing.Size(213, 26);
+            this.setUSBConnectionToolStripMenuItem.Text = "Set USB connection";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -268,6 +277,7 @@
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox testTextbox;
+        private System.Windows.Forms.ToolStripMenuItem setUSBConnectionToolStripMenuItem;
     }
 }
 
