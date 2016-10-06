@@ -61,6 +61,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnCOMportsRefresh = new System.Windows.Forms.Button();
+            this.btnSendData = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.ConnectionSettings.SuspendLayout();
@@ -364,11 +365,22 @@
             this.btnCOMportsRefresh.UseVisualStyleBackColor = true;
             this.btnCOMportsRefresh.Click += new System.EventHandler(this.btnCOMportsRefresh_Click);
             // 
+            // btnSendData
+            // 
+            this.btnSendData.Location = new System.Drawing.Point(341, 203);
+            this.btnSendData.Name = "btnSendData";
+            this.btnSendData.Size = new System.Drawing.Size(140, 23);
+            this.btnSendData.TabIndex = 17;
+            this.btnSendData.Text = "Send data";
+            this.btnSendData.UseVisualStyleBackColor = true;
+            this.btnSendData.Click += new System.EventHandler(this.btnSendData_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1138, 529);
+            this.Controls.Add(this.btnSendData);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.statusStrip1);
@@ -428,6 +440,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.Button btnCOMportsRefresh;
+        private System.Windows.Forms.Button btnSendData;
     }
 }
 

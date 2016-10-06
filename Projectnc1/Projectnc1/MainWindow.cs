@@ -131,6 +131,11 @@ namespace Projectnc1
             comboBoxCOMports.Items.AddRange(USBconnection.portNames);   //Add Found port names to the combo box
             comboBoxCOMports.SelectedIndex = 0;                         //Set selected index
         }
+
+        private void btnSendData_Click(object sender, EventArgs e)
+        {
+            ConnectionUSB.SendAxisData(Convert.ToChar(41631), 150, 200, 10, 1000);
+        }
     }
 
 
