@@ -51,8 +51,9 @@ namespace Projectnc1
 
         static public void SendAxisData(char axisNum, UInt16 acceleration, UInt16 deceleration, UInt16 speed, Int32 steps)
         {
-            char temp;
-            USBserialPort.Write(Convert.ToString(axisNum));
+            byte[] temp;
+            temp = new byte[2];
+            USBserialPort.Write(temp,0,2);
             USBserialPort.Write("a");
             temp = Convert.ToChar(acceleration);
             USBserialPort.Write(Convert.ToString(temp));
