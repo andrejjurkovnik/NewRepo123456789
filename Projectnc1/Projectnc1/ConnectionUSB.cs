@@ -18,35 +18,44 @@ namespace Projectnc1
 {
     class ConnectionUSB
     {
-        static SerialPort USBserialPort = new SerialPort();
-        public ConnectionUSB()
+        /// <summary>
+        /// Global objects/variables
+        /// </summary>
+        static SerialPort USBserialPort;
+        public string[] portNames;
+
+
+        /// <summary>
+        /// Constructors
+        /// </summary>
+        /// <param name="baudRate"></param>
+        public ConnectionUSB(int baudRate = 9600)
         {
-            USBserialPort = new SerialPort();
-            USBserialPort.BaudRate = 9600;//default
-            string[] portNames;
-            portNames = SerialPort.GetPortNames();
-            foreach(string portName in portNames)
-            {
-                try
-                {
-                    USBserialPort.PortName = portName;
-                    USBserialPort.Open();
-                    USBserialPort.Write("h");//write h as hello, MCU must response, otherwise it continues to search for right port
-                    if (USBserialPort.ReadLine() == "Machine connected")
-                    {
-                        break;
-                    }
-                }
-                catch
-                { }
-            }
-            if (USBserialPort.IsOpen) MessageBox.Show("CNC machine connected to port " + USBserialPort.PortName);
-            else MessageBox.Show("No machine found");
+            //Set up Serial port properties
+            USBserialPort = new SerialPort();                       //Create Serial port object      
+            USBserialPort.BaudRate = baudRate;
+            portNames = SerialPort.GetPortNames();                  //Gets all the available COM-ports 
+            
+
         }
 
-        static public void SetBaud(int baud)
+         public bool ConnectUSB(int baudRate, string COMport)
         {
-            USBserialPort.BaudRate = baud;
+
+            USBserialPort.BaudRate = baudRate;                 //set up Baud rate
+            USBserialPort.PortName = COMport;                  //Set up port
+
+            // Check if connection was successful          
+            if (USBserialPort.IsOpen)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
         }
 
         static public void SendAxisData(char axisNum, UInt16 acceleration, UInt16 deceleration, UInt16 speed, Int32 steps)
@@ -55,9 +64,9 @@ namespace Projectnc1
             temp = new byte[2];
             USBserialPort.Write(temp,0,2);
             USBserialPort.Write("a");
-            temp = Convert.ToChar(acceleration);
+            temp[0] = (byte)(acceleration);
             USBserialPort.Write(Convert.ToString(temp));
-            temp = Convert.ToChar(acceleration >> 8);
+            temp[1] = (byte)(acceleration >> 8);
             USBserialPort.Write(Convert.ToString(temp));
         }
     }
