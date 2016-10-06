@@ -123,7 +123,14 @@ namespace Projectnc1
                 
         }
 
-
+        private void btnCOMportsRefresh_Click(object sender, EventArgs e)
+        {
+            USBconnection.getPorts();
+            comboBoxCOMports.Items.Clear();
+            comboBoxCOMports.Items.Add("Please select...");             //Add "Pleas select..." item to the combo box           
+            comboBoxCOMports.Items.AddRange(USBconnection.portNames);   //Add Found port names to the combo box
+            comboBoxCOMports.SelectedIndex = 0;                         //Set selected index
+        }
     }
 
 

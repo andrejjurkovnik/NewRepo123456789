@@ -58,6 +58,18 @@ namespace Projectnc1
 
         }
 
+        public void getPorts()
+        {
+            portNames = SerialPort.GetPortNames();                  //Gets all the available COM-ports 
+        }
+
+
+
+
+
+
+
+
         static public void SendAxisData(char axisNum, UInt16 acceleration, UInt16 deceleration, UInt16 speed, Int32 steps)
         {
             byte[] temp;

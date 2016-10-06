@@ -53,7 +53,6 @@
             this.testTextbox = new System.Windows.Forms.TextBox();
             this.ConnectionSettings = new System.Windows.Forms.TabControl();
             this.USBsettingsTab = new System.Windows.Forms.TabPage();
-            this.btnCOMportsRefresh = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.comboBoxCOMports = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -61,6 +60,7 @@
             this.LANsettingsTab = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnCOMportsRefresh = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.ConnectionSettings.SuspendLayout();
@@ -281,15 +281,6 @@
             this.USBsettingsTab.TabIndex = 0;
             this.USBsettingsTab.Text = "USB Settings";
             // 
-            // btnCOMportsRefresh
-            // 
-            this.btnCOMportsRefresh.Location = new System.Drawing.Point(188, 47);
-            this.btnCOMportsRefresh.Name = "btnCOMportsRefresh";
-            this.btnCOMportsRefresh.Size = new System.Drawing.Size(65, 23);
-            this.btnCOMportsRefresh.TabIndex = 2;
-            this.btnCOMportsRefresh.Text = "Refresh";
-            this.btnCOMportsRefresh.UseVisualStyleBackColor = true;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -363,6 +354,16 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Job";
             // 
+            // btnCOMportsRefresh
+            // 
+            this.btnCOMportsRefresh.Location = new System.Drawing.Point(188, 47);
+            this.btnCOMportsRefresh.Name = "btnCOMportsRefresh";
+            this.btnCOMportsRefresh.Size = new System.Drawing.Size(65, 23);
+            this.btnCOMportsRefresh.TabIndex = 2;
+            this.btnCOMportsRefresh.Text = "Refresh";
+            this.btnCOMportsRefresh.UseVisualStyleBackColor = true;
+            this.btnCOMportsRefresh.Click += new System.EventHandler(this.btnCOMportsRefresh_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -421,12 +422,12 @@
         private System.Windows.Forms.ComboBox comboBoxCOMports;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBoxBaudRate;
-        private System.Windows.Forms.Button btnCOMportsRefresh;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+        private System.Windows.Forms.Button btnCOMportsRefresh;
     }
 }
 
