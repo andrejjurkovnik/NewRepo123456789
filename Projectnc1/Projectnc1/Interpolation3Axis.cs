@@ -51,11 +51,11 @@ namespace Projectnc1
             {
                 for (int i = 0; i < numberOfAxis; i++)
                 {
-                    //speed = (endPosition[i] - Axis[i].position) * feed_rate / totalLength....mm/s
-                    //omega = 2 * pi * speed/gear
+                    //speedInstruction = (endPosition[i] - Axis[i].position) * feed_rate / totalLength....mm/s
+                    //omega = 2 * pi * speedInstruction/gear
                     //omega = omega * 100... MCU is operating with integers and we get more precision that way
-                    Axis[i].speed = Convert.ToInt32((((endPosition[i] - Axis[i].position) * feed_rate / totalLength) / gear * 2 * Math.PI) * 100);
-                    if (Axis[i].speed < 0) Axis[i].speed = -Axis[i].speed;
+                    Axis[i].speedInstruction = Convert.ToInt32((((endPosition[i] - Axis[i].position) * feed_rate / totalLength) / gear * 2 * Math.PI) * 100);
+                    if (Axis[i].speedInstruction < 0) Axis[i].speedInstruction = -Axis[i].speedInstruction;
                 }
             }
             rapidPositioning(endPosition);              //set number of steps to move

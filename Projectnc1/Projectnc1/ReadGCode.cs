@@ -11,32 +11,25 @@ namespace Projectnc1
     class ReadGCode
     {
 
-        static public double[] positions;
+        public double[] positions;
+        public int GcodeMode = 0;
+        public bool GcodeExecuting = false;
+        public int executingLine = 0;
 
         public ReadGCode(int stMotirjev)
         {
             positions = new double[stMotirjev];
         }
 
-        static public string getCommandType(string line)
+        public void SetGmode(string line)
         {
-
-            Regex Gtype = new Regex("[G][0-9][0-9]");       //Regular expresion for serching G.... 
-            Match GtypeMatch = Gtype.Match(line);           //Searches for pateren
-
-            if (GtypeMatch.Success)                          //If search was successful return value else return string "previous"
-            {
-                return GtypeMatch.Value;
-            }
-            else
-            {
-                return "previous";
-            }
-
-
+            if (line.Contains("G00")) GcodeMode = 0;
+            else if (line.Contains("G01")) GcodeMode = 1;
+            else if (line.Contains("G02")) GcodeMode = 2;
+            else if (line.Contains("G03")) GcodeMode = 3;
         }
 
-        static public double[] readG00G01(string line, double[] currentAxisPosition)
+        public double[] readG00G01(string line, double[] currentAxisPosition)
         {
             double[] values;//what is the point of that, function can be void!
             values = new double[3];
