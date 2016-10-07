@@ -19,19 +19,46 @@ namespace Projectnc1
         /// <summary>
         /// Global objects
         /// </summary>
-        string filePath = "";
+        ///
+        ConnectionUSB USBconnection;    //USB connection object
+        string filePath = "";           //G file path
         string[] fileContent;
-        double[][] Movements;
+        
 
-        ConnectionUSB USBport;
+
 
         public MainWindow()
         {
+            //Form start
             InitializeComponent();
-            USBport = new ConnectionUSB();
-                   
-            
-           
+
+            //Set up connection object
+            USBconnection = new ConnectionUSB();                        //Set up connection with default settings
+            comboBoxCOMports.Items.Add("Please select...");             //Add "Pleas select..." item to the combo box           
+            comboBoxCOMports.Items.AddRange(USBconnection.portNames);   //Add Found port names to the combo box
+            comboBoxCOMports.SelectedIndex = 0;                         //Set selected index
+
+            comboBoxBaudRate.SelectedIndex = 0;
+
+
+
+        }
+
+        private void btnConnect_Click(object sender, EventArgs e)
+        {
+            bool success = USBconnection.ConnectUSB(Convert.ToInt32(comboBoxBaudRate.SelectedItem), Convert.ToString(comboBoxCOMports.SelectedItem));
+
+            if (success)
+            {
+                comboBoxBaudRate.Enabled = false;
+                comboBoxCOMports.Enabled = false;
+
+            }
+            else
+            {
+                MessageBox.Show("Connection to the machine was NOT successful", "Error");
+            }
+
         }
 
 
@@ -77,7 +104,6 @@ namespace Projectnc1
                         ReadGCode.readG00G01(line);
                         positions = ReadGCode.positions;
                         Interpolation3Axis.rapidPositioning(positions);
-                        ConnectionUSB.SendAxisData('0', 8224, 8224, 8224, 800);
                         //send data
                         break;
                     case "G01":
@@ -95,6 +121,20 @@ namespace Projectnc1
 
           
                 
+        }
+
+        private void btnCOMportsRefresh_Click(object sender, EventArgs e)
+        {
+            USBconnection.getPorts();
+            comboBoxCOMports.Items.Clear();
+            comboBoxCOMports.Items.Add("Please select...");             //Add "Pleas select..." item to the combo box           
+            comboBoxCOMports.Items.AddRange(USBconnection.portNames);   //Add Found port names to the combo box
+            comboBoxCOMports.SelectedIndex = 0;                         //Set selected index
+        }
+
+        private void btnSendData_Click(object sender, EventArgs e)
+        {
+            ConnectionUSB.SendAxisData(Convert.ToChar(41631), 150, 200, 10, 1000);
         }
     }
 

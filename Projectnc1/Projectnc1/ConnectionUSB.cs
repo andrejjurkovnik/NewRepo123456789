@@ -18,69 +18,105 @@ namespace Projectnc1
 {
     class ConnectionUSB
     {
-        static SerialPort USBserialPort = new SerialPort();
-        public ConnectionUSB()
+        /// <summary>
+        /// Global objects/variables
+        /// </summary>
+        static SerialPort USBserialPort;
+        public string[] portNames;
+
+
+
+        public ConnectionUSB(int baudRate = 9600)
         {
-            USBserialPort = new SerialPort();
-            USBserialPort.BaudRate = 9600;//default
-            USBserialPort.PortName = "COM4";
-            USBserialPort.Open();
-            //string[] portNames;
-            //portNames = SerialPort.GetPortNames();
-            //foreach(string portName in portNames)
-            //{
-            //    try
-            //    {
-            //        USBserialPort.PortName = portName;
-            //        USBserialPort.Open();
-            //        USBserialPort.Write("h");//write h as hello, MCU must response, otherwise it continues to search for right port
-            //        if (USBserialPort.ReadLine() == "Machine connected")
-            //        {
-            //            break;
-            //        }
-            //    }
-            //    catch
-            //    { }
-            //}
-            //if (USBserialPort.IsOpen) MessageBox.Show("CNC machine connected to port " + USBserialPort.PortName);
-            //else MessageBox.Show("No machine found");
+            //Set up Serial port properties
+            USBserialPort = new SerialPort();                       //Create Serial port object      
+            USBserialPort.BaudRate = baudRate;
+            portNames = SerialPort.GetPortNames();                  //Gets all the available COM-ports 
+            
+
         }
 
-        static public void SetBaud(int baud)
+        public bool ConnectUSB(int baudRate, string COMport)
         {
-            USBserialPort.BaudRate = baud;
+
+            USBserialPort.BaudRate = baudRate;                 //set up Baud rate
+            USBserialPort.PortName = COMport;                  //Set up port
+
+            // Check if connection was successful          
+            if (USBserialPort.IsOpen)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
         }
+
+        public void getPorts()
+        {
+            portNames = SerialPort.GetPortNames();                  //Gets all the available COM-ports 
+        }
+
+
+
+
+
+
+
 
         static public void SendAxisData(char axisNum, UInt16 acceleration, UInt16 deceleration, UInt16 speed, Int32 steps)
         {
-            if (!USBserialPort.IsOpen) USBserialPort.Open();
-            byte[] temp;
-            temp = new byte[2];
-            USBserialPort.Write(Convert.ToString(axisNum));
+            //Send Axis Number
+            byte[] toSend;
+            toSend = new byte[2];
+            toSend = BitConverter.GetBytes(axisNum); 
+            USBserialPort.Write(toSend, 0, 2);
 
-            USBserialPort.Write("a");
-            temp[0] = Convert.ToByte(acceleration);
-            temp[1] = Convert.ToByte(acceleration >> 8);
-            USBserialPort.Write(temp,0,2);
+            //Send a - for acceleration
+            toSend = new byte[2];
+            toSend = BitConverter.GetBytes('a');
+            USBserialPort.Write(toSend, 0, 2);
 
-            USBserialPort.Write("d");
-            temp[0] = Convert.ToByte(deceleration);
-            temp[1] = Convert.ToByte(deceleration >> 8);
-            USBserialPort.Write(temp, 0, 2);
+            //Send acceleration value
+            toSend = new byte[2];
+            toSend = BitConverter.GetBytes(acceleration);
+            USBserialPort.Write(toSend, 0, 2);
 
-            USBserialPort.Write("f");
-            temp[0] = Convert.ToByte(speed);
-            temp[1] = Convert.ToByte(speed >> 8);
-            USBserialPort.Write(temp, 0, 2);
+            //Send d - for deceleration
+            toSend = new byte[2];
+            toSend = BitConverter.GetBytes('d');
+            USBserialPort.Write(toSend, 0, 2);
 
-            USBserialPort.Write("s");
-            USBserialPort.Write(Convert.ToString(steps));
-            USBserialPort.Write("e");
+            //Send deceleration value
+            toSend = new byte[2];
+            toSend = BitConverter.GetBytes(deceleration);
+            USBserialPort.Write(toSend, 0, 2);
 
-            USBserialPort.Write("c");
-            USBserialPort.Write("m");
+            //Send s - for speed
+            toSend = new byte[2];
+            toSend = BitConverter.GetBytes('s');
+            USBserialPort.Write(toSend, 0, 2);
 
-            USBserialPort.Close();
+            //Send speed value
+            toSend = new byte[2];
+            toSend = BitConverter.GetBytes(speed);
+            USBserialPort.Write(toSend, 0, 2);
+
+            //Send m - for steeps
+            toSend = new byte[2];
+            toSend = BitConverter.GetBytes('m');
+            USBserialPort.Write(toSend, 0, 2);
+
+            //Send deceleration value
+            toSend = new byte[4];
+            toSend = BitConverter.GetBytes(steps);
+            USBserialPort.Write(toSend, 0, 4);
+
         }
+
+
     }
 }
