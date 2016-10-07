@@ -26,15 +26,11 @@ namespace Projectnc1
         string[] fileContent;
         Interpolation3Axis interpolation;
 
-
-
-
         public MainWindow()
         {
             //Form start
             InitializeComponent();
-
-            
+            this.KeyPreview = true;
 
             //Set up connection object
             USBconnection = new ConnectionUSB();                        //Set up connection with default settings
@@ -43,6 +39,7 @@ namespace Projectnc1
             comboBoxCOMports.SelectedIndex = 0;                         //Set selected COMport index
 
             comboBoxBaudRate.SelectedIndex = 0;                         //Set selected Baud rate index
+
             interpolation = new Interpolation3Axis(3);
         }
 
@@ -78,7 +75,6 @@ namespace Projectnc1
             //Briši komentar
             double[] positions;
             positions = new double[3];
-            double[] ppositions = { 0, 0, 0 };
 
             foreach (string line in fileContent)
             {
@@ -137,11 +133,6 @@ namespace Projectnc1
 
         private void btnSendData_Click(object sender, EventArgs e)
         {
-            sendData();
-        }
-
-        void sendData()
-        {
             double[] movePositions;
             movePositions = new double[3];
             try
@@ -180,11 +171,29 @@ namespace Projectnc1
             ConnectionUSB.SendAxisData('2', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[2].stepsInstruction));
             ConnectionUSB.SendMoveCommand();
         }
-
-
+        
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            switch (keyData)
+            {
+                case Keys.PageUp:
+                    break;
+                case Keys.PageDown:
+                    break;
+                case Keys.Up:
+                    break;
+                case Keys.Down:
+                    break;
+                case Keys.Left:
+                    break;
+                case Keys.Right:
+                    break;
+                default:
+                    break;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
     }
-
-
 
 
 }
