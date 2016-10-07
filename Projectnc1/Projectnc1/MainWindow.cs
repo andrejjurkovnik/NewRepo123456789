@@ -36,9 +36,12 @@ namespace Projectnc1
             USBconnection = new ConnectionUSB();                        //Set up connection with default settings
             comboBoxCOMports.Items.Add("Please select...");             //Add "Pleas select..." item to the combo box           
             comboBoxCOMports.Items.AddRange(USBconnection.portNames);   //Add Found port names to the combo box
-            comboBoxCOMports.SelectedIndex = 0;                         //Set selected COMport index
+            comboBoxCOMports.SelectedIndex = 0;                         //Set selected index
 
-            comboBoxBaudRate.SelectedIndex = 0;                         //Set selected Baud rate index
+            comboBoxBaudRate.SelectedIndex = 0;
+
+
+
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
@@ -49,11 +52,13 @@ namespace Projectnc1
             {
                 comboBoxBaudRate.Enabled = false;
                 comboBoxCOMports.Enabled = false;
+
             }
             else
             {
                 MessageBox.Show("Connection to the machine was NOT successful", "Error");
             }
+
         }
 
 
@@ -82,8 +87,11 @@ namespace Projectnc1
                 //Replace comma with dot
                 line.Replace(",", ".");
 
+
                 string currentCommand = "G00";
                 string returnCommandType = ReadGCode.getCommandType(line);
+
+                
 
                 if (returnCommandType == "previous")
                 {
@@ -106,7 +114,13 @@ namespace Projectnc1
                     default:
                         break;
                 }
-            }     
+
+
+            }
+
+
+          
+                
         }
 
         private void btnCOMportsRefresh_Click(object sender, EventArgs e)
@@ -120,17 +134,7 @@ namespace Projectnc1
 
         private void btnSendData_Click(object sender, EventArgs e)
         {
-            double a = 0, b = 0, c = 0;
-            double[] movePositions;
-            movePositions = new double[3];
-            movePositions[0] = Interpolation3Axis.Axis[0].position + a;
-            movePositions[1] = Interpolation3Axis.Axis[1].position + b;
-            movePositions[2] = Interpolation3Axis.Axis[2].position + c;
-            Interpolation3Axis.rapidPositioning(movePositions);
-            ConnectionUSB.SendAxisData('0', 8226, 8226, 8226, Convert.ToInt32(Interpolation3Axis.Axis[0].stepsInstruction));
-            ConnectionUSB.SendAxisData('1', 8226, 8226, 8226, Convert.ToInt32(Interpolation3Axis.Axis[1].stepsInstruction));
-            ConnectionUSB.SendAxisData('2', 8226, 8226, 8226, Convert.ToInt32(Interpolation3Axis.Axis[2].stepsInstruction));
-            ConnectionUSB.SendMoveCommand();
+            ConnectionUSB.SendAxisData('1', 8226, 8226, 8226, 800);
         }
     }
 

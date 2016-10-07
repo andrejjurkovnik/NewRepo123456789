@@ -47,6 +47,7 @@ namespace Projectnc1
             }
             catch
             { }
+            
 
             // Check if connection was successful          
             if (USBserialPort.IsOpen)
@@ -103,13 +104,9 @@ namespace Projectnc1
             USBserialPort.Write("e");
 
             USBserialPort.Write("c");
+            USBserialPort.Write("m");
 
             //USBserialPort.Close();
-        }
-
-        static public void SendMoveCommand()
-        {
-            USBserialPort.Write("m");
         }
 
 
