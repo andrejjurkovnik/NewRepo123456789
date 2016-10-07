@@ -23,10 +23,12 @@ namespace Projectnc1
         string[] fileContent;
         double[][] Movements;
 
+        ConnectionUSB USBport;
+
         public MainWindow()
         {
             InitializeComponent();
-
+            USBport = new ConnectionUSB();
                    
             
            
@@ -75,6 +77,7 @@ namespace Projectnc1
                         ReadGCode.readG00G01(line);
                         positions = ReadGCode.positions;
                         Interpolation3Axis.rapidPositioning(positions);
+                        ConnectionUSB.SendAxisData('0', 8224, 8224, 8224, 800);
                         //send data
                         break;
                     case "G01":
