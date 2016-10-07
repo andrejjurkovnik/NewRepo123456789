@@ -40,6 +40,7 @@ namespace Projectnc1
             comboBoxCOMports.SelectedIndex = 0;                         //Set selected COMport index
 
             comboBoxBaudRate.SelectedIndex = 0;                         //Set selected Baud rate index
+            interpolation = new Interpolation3Axis(3);
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
@@ -60,7 +61,7 @@ namespace Projectnc1
 
         private void btnSelectGFile_Click(object sender, EventArgs e)
         {
-            interpolation = new Interpolation3Axis(3);
+            
             ReadGCode reader = new ReadGCode(3);
 
             // Get G code file path
@@ -91,16 +92,27 @@ namespace Projectnc1
                     currentCommand = returnCommandType;
                 }
 
+                double[] currentAxisPositions;
+                currentAxisPositions = new double[3];
+
                 switch (currentCommand)
                 {
                     case "G00":
-                        ReadGCode.readG00G01(line);
+                        currentAxisPositions[0] = interpolation.Axis[0].position;
+                        currentAxisPositions[1] = interpolation.Axis[1].position;
+                        currentAxisPositions[2] = interpolation.Axis[2].position;
+                        ReadGCode.readG00G01(line, currentAxisPositions);
                         positions = ReadGCode.positions;
                         interpolation.rapidPositioning(positions);
                         //send data
                         break;
                     case "G01":
-                        ReadGCode.readG00G01(line);
+                        currentAxisPositions = new double[3];
+                        currentAxisPositions[0] = interpolation.Axis[0].position;
+                        currentAxisPositions[1] = interpolation.Axis[1].position;
+                        currentAxisPositions[2] = interpolation.Axis[2].position;
+                        ReadGCode.readG00G01(line, currentAxisPositions);
+                        ReadGCode.readG00G01(line, currentAxisPositions);
                         positions = ReadGCode.positions;
                         interpolation.linearInterpolation(positions);
                         break;
@@ -121,18 +133,17 @@ namespace Projectnc1
 
         private void btnSendData_Click(object sender, EventArgs e)
         {
-            double a = 0, b = 0, c = 0;
             double[] movePositions;
             movePositions = new double[3];
+            movePositions[0] = interpolation.Axis[0].position + Convert.ToDouble(tbMoveX.Text);
+            movePositions[1] = interpolation.Axis[1].position + Convert.ToDouble(tbMoveY.Text);
+            movePositions[2] = interpolation.Axis[2].position + Convert.ToDouble(tbMoveZ.Text);
+            interpolation.rapidPositioning(movePositions);
+            ConnectionUSB.SendAxisData('0', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[0].stepsInstruction));
+            ConnectionUSB.SendAxisData('1', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[1].stepsInstruction));
+            ConnectionUSB.SendAxisData('2', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[2].stepsInstruction));
+            ConnectionUSB.SendMoveCommand();
             testTextbox.Text = Convert.ToString(interpolation.Axis[0].position);
-            //movePositions[0] = Interpolation3Axis.Axis[0].position + a;
-            //movePositions[1] = Interpolation3Axis.Axis[1].position + b;
-            //movePositions[2] = Interpolation3Axis.Axis[2].position + c;
-            //Interpolation3Axis.rapidPositioning(movePositions);
-            //ConnectionUSB.SendAxisData('0', 8226, 8226, 8226, Convert.ToInt32(Interpolation3Axis.Axis[0].stepsInstruction));
-            //ConnectionUSB.SendAxisData('1', 8226, 8226, 8226, Convert.ToInt32(Interpolation3Axis.Axis[1].stepsInstruction));
-            //ConnectionUSB.SendAxisData('2', 8226, 8226, 8226, Convert.ToInt32(Interpolation3Axis.Axis[2].stepsInstruction));
-            //ConnectionUSB.SendMoveCommand();
         }
 
 

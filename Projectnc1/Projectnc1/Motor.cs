@@ -8,12 +8,12 @@ namespace Projectnc1
 {
     class Motor
     {
-        public double position;      //Current position
+        public double position = 0;      //Current position
         public int[] steps;         //Number of steps to move
-        public int stepsInstruction;
-        public int acceleration;
-        public int deceleration;
-        public int speed;
+        public int stepsInstruction = 0;
+        public int acceleration = 0;
+        public int deceleration = 0;
+        public int speed = 0;
 
 
         public void SendMotorData(int acceleration, int deceleration, int speed, int step)
