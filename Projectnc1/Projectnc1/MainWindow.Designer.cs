@@ -62,18 +62,14 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnSendData = new System.Windows.Forms.Button();
-            this.btnXup = new System.Windows.Forms.Button();
-            this.tbXdown = new System.Windows.Forms.TextBox();
-            this.btnXdown = new System.Windows.Forms.Button();
-            this.tbYup = new System.Windows.Forms.TextBox();
-            this.tbXup = new System.Windows.Forms.TextBox();
-            this.btnYdown = new System.Windows.Forms.Button();
-            this.tbYdown = new System.Windows.Forms.TextBox();
-            this.btnYup = new System.Windows.Forms.Button();
-            this.btnZup = new System.Windows.Forms.Button();
-            this.btnZdown = new System.Windows.Forms.Button();
-            this.tbZdown = new System.Windows.Forms.TextBox();
-            this.tbZup = new System.Windows.Forms.TextBox();
+            this.tbMoveX = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbMoveY = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tbMoveZ = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.ConnectionSettings.SuspendLayout();
@@ -289,7 +285,7 @@
             this.USBsettingsTab.Controls.Add(this.comboBoxBaudRate);
             this.USBsettingsTab.Location = new System.Drawing.Point(4, 22);
             this.USBsettingsTab.Name = "USBsettingsTab";
-            this.USBsettingsTab.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.USBsettingsTab.Padding = new System.Windows.Forms.Padding(3);
             this.USBsettingsTab.Size = new System.Drawing.Size(259, 87);
             this.USBsettingsTab.TabIndex = 0;
             this.USBsettingsTab.Text = "USB Settings";
@@ -297,7 +293,7 @@
             // btnCOMportsRefresh
             // 
             this.btnCOMportsRefresh.Location = new System.Drawing.Point(187, 50);
-            this.btnCOMportsRefresh.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCOMportsRefresh.Margin = new System.Windows.Forms.Padding(2);
             this.btnCOMportsRefresh.Name = "btnCOMportsRefresh";
             this.btnCOMportsRefresh.Size = new System.Drawing.Size(49, 19);
             this.btnCOMportsRefresh.TabIndex = 2;
@@ -346,7 +342,7 @@
             // 
             this.LANsettingsTab.Location = new System.Drawing.Point(4, 22);
             this.LANsettingsTab.Name = "LANsettingsTab";
-            this.LANsettingsTab.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.LANsettingsTab.Padding = new System.Windows.Forms.Padding(3);
             this.LANsettingsTab.Size = new System.Drawing.Size(259, 87);
             this.LANsettingsTab.TabIndex = 1;
             this.LANsettingsTab.Text = "LAN settings";
@@ -361,7 +357,7 @@
             this.groupBox1.Controls.Add(this.btnConnect);
             this.groupBox1.Location = new System.Drawing.Point(12, 27);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(278, 175);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
@@ -373,7 +369,7 @@
             this.groupBox2.Controls.Add(this.btnSelectGFile);
             this.groupBox2.Controls.Add(this.txtBoxFileSelected);
             this.groupBox2.Location = new System.Drawing.Point(9, 381);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(281, 66);
             this.groupBox2.TabIndex = 16;
@@ -382,140 +378,92 @@
             // 
             // btnSendData
             // 
-            this.btnSendData.Location = new System.Drawing.Point(397, 150);
-            this.btnSendData.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSendData.Location = new System.Drawing.Point(209, 217);
+            this.btnSendData.Margin = new System.Windows.Forms.Padding(2);
             this.btnSendData.Name = "btnSendData";
-            this.btnSendData.Size = new System.Drawing.Size(140, 23);
+            this.btnSendData.Size = new System.Drawing.Size(71, 78);
             this.btnSendData.TabIndex = 17;
             this.btnSendData.Text = "Send data";
             this.btnSendData.UseVisualStyleBackColor = true;
             this.btnSendData.Click += new System.EventHandler(this.btnSendData_Click);
             // 
-            // btnXup
+            // tbMoveX
             // 
-            this.btnXup.Location = new System.Drawing.Point(86, 220);
-            this.btnXup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.btnXup.Name = "btnXup";
-            this.btnXup.Size = new System.Drawing.Size(21, 47);
-            this.btnXup.TabIndex = 18;
-            this.btnXup.Text = "X up";
-            this.btnXup.UseVisualStyleBackColor = true;
+            this.tbMoveX.Location = new System.Drawing.Point(94, 219);
+            this.tbMoveX.Name = "tbMoveX";
+            this.tbMoveX.Size = new System.Drawing.Size(100, 20);
+            this.tbMoveX.TabIndex = 18;
             // 
-            // tbXdown
+            // label5
             // 
-            this.tbXdown.Location = new System.Drawing.Point(86, 340);
-            this.tbXdown.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tbXdown.Name = "tbXdown";
-            this.tbXdown.Size = new System.Drawing.Size(23, 20);
-            this.tbXdown.TabIndex = 19;
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(20, 222);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(68, 13);
+            this.label5.TabIndex = 19;
+            this.label5.Text = "Move X axis:";
             // 
-            // btnXdown
+            // tbMoveY
             // 
-            this.btnXdown.Location = new System.Drawing.Point(86, 288);
-            this.btnXdown.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.btnXdown.Name = "btnXdown";
-            this.btnXdown.Size = new System.Drawing.Size(21, 47);
-            this.btnXdown.TabIndex = 18;
-            this.btnXdown.Text = "X down";
-            this.btnXdown.UseVisualStyleBackColor = true;
+            this.tbMoveY.Location = new System.Drawing.Point(94, 246);
+            this.tbMoveY.Name = "tbMoveY";
+            this.tbMoveY.Size = new System.Drawing.Size(100, 20);
+            this.tbMoveY.TabIndex = 18;
             // 
-            // tbYup
+            // label6
             // 
-            this.tbYup.Location = new System.Drawing.Point(160, 268);
-            this.tbYup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tbYup.Name = "tbYup";
-            this.tbYup.Size = new System.Drawing.Size(23, 20);
-            this.tbYup.TabIndex = 19;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(20, 249);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(68, 13);
+            this.label6.TabIndex = 19;
+            this.label6.Text = "Move Y axis:";
             // 
-            // tbXup
+            // textBox3
             // 
-            this.tbXup.Location = new System.Drawing.Point(86, 202);
-            this.tbXup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tbXup.Name = "tbXup";
-            this.tbXup.Size = new System.Drawing.Size(23, 20);
-            this.tbXup.TabIndex = 19;
+            this.textBox3.Location = new System.Drawing.Point(94, 275);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(100, 20);
+            this.textBox3.TabIndex = 18;
             // 
-            // btnYdown
+            // label7
             // 
-            this.btnYdown.Location = new System.Drawing.Point(38, 264);
-            this.btnYdown.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.btnYdown.Name = "btnYdown";
-            this.btnYdown.Size = new System.Drawing.Size(44, 23);
-            this.btnYdown.TabIndex = 18;
-            this.btnYdown.Text = "Y down";
-            this.btnYdown.UseVisualStyleBackColor = true;
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(20, 278);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(68, 13);
+            this.label7.TabIndex = 19;
+            this.label7.Text = "Move X axis:";
             // 
-            // tbYdown
+            // tbMoveZ
             // 
-            this.tbYdown.Location = new System.Drawing.Point(12, 268);
-            this.tbYdown.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tbYdown.Name = "tbYdown";
-            this.tbYdown.Size = new System.Drawing.Size(23, 20);
-            this.tbYdown.TabIndex = 19;
+            this.tbMoveZ.Location = new System.Drawing.Point(94, 272);
+            this.tbMoveZ.Name = "tbMoveZ";
+            this.tbMoveZ.Size = new System.Drawing.Size(100, 20);
+            this.tbMoveZ.TabIndex = 18;
             // 
-            // btnYup
+            // label8
             // 
-            this.btnYup.Location = new System.Drawing.Point(112, 264);
-            this.btnYup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.btnYup.Name = "btnYup";
-            this.btnYup.Size = new System.Drawing.Size(44, 23);
-            this.btnYup.TabIndex = 18;
-            this.btnYup.Text = "Y up";
-            this.btnYup.UseVisualStyleBackColor = true;
-            // 
-            // btnZup
-            // 
-            this.btnZup.Location = new System.Drawing.Point(201, 226);
-            this.btnZup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.btnZup.Name = "btnZup";
-            this.btnZup.Size = new System.Drawing.Size(21, 47);
-            this.btnZup.TabIndex = 18;
-            this.btnZup.Text = "Z up";
-            this.btnZup.UseVisualStyleBackColor = true;
-            // 
-            // btnZdown
-            // 
-            this.btnZdown.Location = new System.Drawing.Point(201, 277);
-            this.btnZdown.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.btnZdown.Name = "btnZdown";
-            this.btnZdown.Size = new System.Drawing.Size(21, 47);
-            this.btnZdown.TabIndex = 18;
-            this.btnZdown.Text = "Z down";
-            this.btnZdown.UseVisualStyleBackColor = true;
-            // 
-            // tbZdown
-            // 
-            this.tbZdown.Location = new System.Drawing.Point(201, 328);
-            this.tbZdown.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tbZdown.Name = "tbZdown";
-            this.tbZdown.Size = new System.Drawing.Size(23, 20);
-            this.tbZdown.TabIndex = 19;
-            // 
-            // tbZup
-            // 
-            this.tbZup.Location = new System.Drawing.Point(201, 202);
-            this.tbZup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tbZup.Name = "tbZup";
-            this.tbZup.Size = new System.Drawing.Size(23, 20);
-            this.tbZup.TabIndex = 19;
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(20, 275);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(68, 13);
+            this.label8.TabIndex = 19;
+            this.label8.Text = "Move Z axis:";
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(854, 470);
-            this.Controls.Add(this.tbYdown);
-            this.Controls.Add(this.tbZup);
-            this.Controls.Add(this.tbXup);
-            this.Controls.Add(this.tbYup);
-            this.Controls.Add(this.tbZdown);
-            this.Controls.Add(this.tbXdown);
-            this.Controls.Add(this.btnYup);
-            this.Controls.Add(this.btnYdown);
-            this.Controls.Add(this.btnZdown);
-            this.Controls.Add(this.btnXdown);
-            this.Controls.Add(this.btnZup);
-            this.Controls.Add(this.btnXup);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.tbMoveZ);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.tbMoveY);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.tbMoveX);
             this.Controls.Add(this.btnSendData);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -523,7 +471,7 @@
             this.Controls.Add(this.testTextbox);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainWindow";
             this.Text = "CNC";
             this.menuStrip.ResumeLayout(false);
@@ -577,18 +525,14 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.Button btnCOMportsRefresh;
         private System.Windows.Forms.Button btnSendData;
-        private System.Windows.Forms.Button btnXup;
-        private System.Windows.Forms.TextBox tbXdown;
-        private System.Windows.Forms.Button btnXdown;
-        private System.Windows.Forms.TextBox tbYup;
-        private System.Windows.Forms.TextBox tbXup;
-        private System.Windows.Forms.Button btnYdown;
-        private System.Windows.Forms.TextBox tbYdown;
-        private System.Windows.Forms.Button btnYup;
-        private System.Windows.Forms.Button btnZup;
-        private System.Windows.Forms.Button btnZdown;
-        private System.Windows.Forms.TextBox tbZdown;
-        private System.Windows.Forms.TextBox tbZup;
+        private System.Windows.Forms.TextBox tbMoveX;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tbMoveY;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox tbMoveZ;
+        private System.Windows.Forms.Label label8;
     }
 }
 

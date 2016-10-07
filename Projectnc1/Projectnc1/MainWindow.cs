@@ -132,6 +132,8 @@ namespace Projectnc1
             ConnectionUSB.SendAxisData('2', 8226, 8226, 8226, Convert.ToInt32(Interpolation3Axis.Axis[2].stepsInstruction));
             ConnectionUSB.SendMoveCommand();
         }
+
+
     }
 
 
