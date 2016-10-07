@@ -52,6 +52,7 @@ namespace Projectnc1
             {
                 comboBoxBaudRate.Enabled = false;
                 comboBoxCOMports.Enabled = false;
+                btnSendData.Enabled = true;
             }
             else
             {
