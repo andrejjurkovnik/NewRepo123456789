@@ -9,11 +9,11 @@ namespace Projectnc1
     class Interpolation3Axis
     {
         //delete
-        static int feed_rate = 20;
-        static int stepsRev = 800;//number of steps per revolution
-        static int gear = 5;//gear ratio - 5mm/rev
-        static int numberOfAxis = 0;
-        static public Motor[] Axis = new Motor[8];
+        int feed_rate = 20;
+        int stepsRev = 800;//number of steps per revolution
+        int gear = 5;//gear ratio - 5mm/rev
+        int numberOfAxis = 0;
+        public Motor[] Axis = new Motor[8];
 
         public Interpolation3Axis(int numOfAxis)
         {
@@ -24,7 +24,7 @@ namespace Projectnc1
             }
         }
 
-        public static void rapidPositioning(double[] endPosition)
+        public void rapidPositioning(double[] endPosition)
         {
             for (int i = 0; i < numberOfAxis; i++)
             {
@@ -33,7 +33,7 @@ namespace Projectnc1
             SetNewPosition();
         }
 
-        public static void linearInterpolation(double[] endPosition)
+        public void linearInterpolation(double[] endPosition)
         {
             double[] length;
             length = new double[numberOfAxis];      //length of one move of one axis
@@ -61,23 +61,23 @@ namespace Projectnc1
             rapidPositioning(endPosition);              //set number of steps to move
         }
 
-        public static void circularInterpolationCW()
+        public void circularInterpolationCW()
         {
 
         }
-        public static void circularInterpolationCCW()
+        public void circularInterpolationCCW()
         {
 
         }
 
-        static int positionToSteps(double startPosition, double endPosition)
+        int positionToSteps(double startPosition, double endPosition)
         {
             int steps;
             steps = Convert.ToInt32((endPosition - startPosition) * stepsRev / gear);
             return steps;
         }
 
-        static void SetNewPosition()
+        void SetNewPosition()
         {
             for (int i = 0; i < numberOfAxis; i++)
             {

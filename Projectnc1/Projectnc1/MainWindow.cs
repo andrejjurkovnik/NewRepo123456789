@@ -23,6 +23,7 @@ namespace Projectnc1
         ConnectionUSB USBconnection;    //USB connection object
         string filePath = "";           //G file path
         string[] fileContent;
+        Interpolation3Axis interpolation;
 
 
 
@@ -59,7 +60,7 @@ namespace Projectnc1
 
         private void btnSelectGFile_Click(object sender, EventArgs e)
         {
-            Interpolation3Axis interpolation = new Interpolation3Axis(3);
+            interpolation = new Interpolation3Axis(3);
             ReadGCode reader = new ReadGCode(3);
 
             // Get G code file path
@@ -95,13 +96,13 @@ namespace Projectnc1
                     case "G00":
                         ReadGCode.readG00G01(line);
                         positions = ReadGCode.positions;
-                        Interpolation3Axis.rapidPositioning(positions);
+                        interpolation.rapidPositioning(positions);
                         //send data
                         break;
                     case "G01":
                         ReadGCode.readG00G01(line);
                         positions = ReadGCode.positions;
-                        Interpolation3Axis.linearInterpolation(positions);
+                        interpolation.linearInterpolation(positions);
                         break;
                     default:
                         break;
@@ -123,14 +124,15 @@ namespace Projectnc1
             double a = 0, b = 0, c = 0;
             double[] movePositions;
             movePositions = new double[3];
-            movePositions[0] = Interpolation3Axis.Axis[0].position + a;
-            movePositions[1] = Interpolation3Axis.Axis[1].position + b;
-            movePositions[2] = Interpolation3Axis.Axis[2].position + c;
-            Interpolation3Axis.rapidPositioning(movePositions);
-            ConnectionUSB.SendAxisData('0', 8226, 8226, 8226, Convert.ToInt32(Interpolation3Axis.Axis[0].stepsInstruction));
-            ConnectionUSB.SendAxisData('1', 8226, 8226, 8226, Convert.ToInt32(Interpolation3Axis.Axis[1].stepsInstruction));
-            ConnectionUSB.SendAxisData('2', 8226, 8226, 8226, Convert.ToInt32(Interpolation3Axis.Axis[2].stepsInstruction));
-            ConnectionUSB.SendMoveCommand();
+            testTextbox.Text = Convert.ToString(interpolation.Axis[0].position);
+            //movePositions[0] = Interpolation3Axis.Axis[0].position + a;
+            //movePositions[1] = Interpolation3Axis.Axis[1].position + b;
+            //movePositions[2] = Interpolation3Axis.Axis[2].position + c;
+            //Interpolation3Axis.rapidPositioning(movePositions);
+            //ConnectionUSB.SendAxisData('0', 8226, 8226, 8226, Convert.ToInt32(Interpolation3Axis.Axis[0].stepsInstruction));
+            //ConnectionUSB.SendAxisData('1', 8226, 8226, 8226, Convert.ToInt32(Interpolation3Axis.Axis[1].stepsInstruction));
+            //ConnectionUSB.SendAxisData('2', 8226, 8226, 8226, Convert.ToInt32(Interpolation3Axis.Axis[2].stepsInstruction));
+            //ConnectionUSB.SendMoveCommand();
         }
 
 
