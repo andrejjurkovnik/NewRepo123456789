@@ -273,6 +273,7 @@
             // 
             // testTextbox
             // 
+            this.testTextbox.Enabled = false;
             this.testTextbox.Location = new System.Drawing.Point(578, 85);
             this.testTextbox.Multiline = true;
             this.testTextbox.Name = "testTextbox";
@@ -619,6 +620,7 @@
             this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "MainWindow";
             this.Text = "CNC";
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainWindow_KeyPress);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.statusStrip1.ResumeLayout(false);

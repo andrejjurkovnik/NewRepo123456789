@@ -34,6 +34,8 @@ namespace Projectnc1
             //Form start
             InitializeComponent();
 
+            
+
             //Set up connection object
             USBconnection = new ConnectionUSB();                        //Set up connection with default settings
             comboBoxCOMports.Items.Add("Please select...");             //Add "Pleas select..." item to the combo box           
@@ -135,6 +137,11 @@ namespace Projectnc1
 
         private void btnSendData_Click(object sender, EventArgs e)
         {
+            sendData();
+        }
+
+        void sendData()
+        {
             double[] movePositions;
             movePositions = new double[3];
             try
@@ -174,7 +181,10 @@ namespace Projectnc1
             ConnectionUSB.SendMoveCommand();
         }
 
+
     }
+
+
 
 
 }
