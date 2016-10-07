@@ -24,7 +24,7 @@ namespace Projectnc1
             Regex Gtype = new Regex("[G][0-9][0-9]");       //Regular expresion for serching G.... 
             Match GtypeMatch = Gtype.Match(line);           //Searches for pateren
 
-            if(GtypeMatch.Success)                          //If search was successful return value else return string "previous"
+            if (GtypeMatch.Success)                          //If search was successful return value else return string "previous"
             {
                 return GtypeMatch.Value;
             }
@@ -47,7 +47,7 @@ namespace Projectnc1
 
             if (matchX.Success)                          //If search was successful return value else return string "previous"
             {
-                positions[0] = double.Parse(matchX.Value.Replace("X",""), CultureInfo.InvariantCulture.NumberFormat);
+                positions[0] = double.Parse(matchX.Value.Replace("X", ""), CultureInfo.InvariantCulture.NumberFormat);
             }
             else
             {
@@ -83,9 +83,9 @@ namespace Projectnc1
 
         }
 
-        
 
 
-        
+
+
     }
 }
