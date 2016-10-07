@@ -36,7 +36,7 @@ namespace Projectnc1
 
         }
 
-        static public double[] readG00G01(string line)
+        static public double[] readG00G01(string line, double[] pposition)
         {
             double[] values;//what is the point of that, function can be void!
             values = new double[3];
@@ -51,7 +51,7 @@ namespace Projectnc1
             }
             else
             {
-                positions[0] = Interpolation3Axis.Axis[0].position;
+                positions[0] = pposition[0];
             }
 
             //Searches for Y value
@@ -64,7 +64,7 @@ namespace Projectnc1
             }
             else
             {
-                positions[1] = Interpolation3Axis.Axis[1].position;
+                positions[1] = pposition[1];
             }
 
             //Searches for Z value
@@ -77,7 +77,7 @@ namespace Projectnc1
             }
             else
             {
-                positions[2] = Interpolation3Axis.Axis[2].position;
+                positions[2] = pposition[2];
             }
             return values;
 
