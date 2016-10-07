@@ -53,6 +53,7 @@
             this.testTextbox = new System.Windows.Forms.TextBox();
             this.ConnectionSettings = new System.Windows.Forms.TabControl();
             this.USBsettingsTab = new System.Windows.Forms.TabPage();
+            this.btnCOMportsRefresh = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.comboBoxCOMports = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -60,8 +61,19 @@
             this.LANsettingsTab = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnCOMportsRefresh = new System.Windows.Forms.Button();
             this.btnSendData = new System.Windows.Forms.Button();
+            this.btnXup = new System.Windows.Forms.Button();
+            this.tbXdown = new System.Windows.Forms.TextBox();
+            this.btnXdown = new System.Windows.Forms.Button();
+            this.tbYup = new System.Windows.Forms.TextBox();
+            this.tbXup = new System.Windows.Forms.TextBox();
+            this.btnYdown = new System.Windows.Forms.Button();
+            this.tbYdown = new System.Windows.Forms.TextBox();
+            this.btnYup = new System.Windows.Forms.Button();
+            this.btnZup = new System.Windows.Forms.Button();
+            this.btnZdown = new System.Windows.Forms.Button();
+            this.tbZdown = new System.Windows.Forms.TextBox();
+            this.tbZup = new System.Windows.Forms.TextBox();
             this.menuStrip.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.ConnectionSettings.SuspendLayout();
@@ -178,7 +190,7 @@
             this.toolStripStatusLabel2,
             this.toolStripStatusLabel1,
             this.toolStripProgressBar1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 507);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 556);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1138, 22);
             this.statusStrip1.TabIndex = 8;
@@ -282,6 +294,16 @@
             this.USBsettingsTab.TabIndex = 0;
             this.USBsettingsTab.Text = "USB Settings";
             // 
+            // btnCOMportsRefresh
+            // 
+            this.btnCOMportsRefresh.Location = new System.Drawing.Point(188, 47);
+            this.btnCOMportsRefresh.Name = "btnCOMportsRefresh";
+            this.btnCOMportsRefresh.Size = new System.Drawing.Size(65, 23);
+            this.btnCOMportsRefresh.TabIndex = 2;
+            this.btnCOMportsRefresh.Text = "Refresh";
+            this.btnCOMportsRefresh.UseVisualStyleBackColor = true;
+            this.btnCOMportsRefresh.Click += new System.EventHandler(this.btnCOMportsRefresh_Click);
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -338,7 +360,7 @@
             this.groupBox1.Controls.Add(this.btnConnect);
             this.groupBox1.Location = new System.Drawing.Point(12, 27);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(281, 219);
+            this.groupBox1.Size = new System.Drawing.Size(282, 215);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Connection";
@@ -348,26 +370,16 @@
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.btnSelectGFile);
             this.groupBox2.Controls.Add(this.txtBoxFileSelected);
-            this.groupBox2.Location = new System.Drawing.Point(12, 252);
+            this.groupBox2.Location = new System.Drawing.Point(12, 469);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(281, 66);
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Job";
             // 
-            // btnCOMportsRefresh
-            // 
-            this.btnCOMportsRefresh.Location = new System.Drawing.Point(188, 47);
-            this.btnCOMportsRefresh.Name = "btnCOMportsRefresh";
-            this.btnCOMportsRefresh.Size = new System.Drawing.Size(65, 23);
-            this.btnCOMportsRefresh.TabIndex = 2;
-            this.btnCOMportsRefresh.Text = "Refresh";
-            this.btnCOMportsRefresh.UseVisualStyleBackColor = true;
-            this.btnCOMportsRefresh.Click += new System.EventHandler(this.btnCOMportsRefresh_Click);
-            // 
             // btnSendData
             // 
-            this.btnSendData.Location = new System.Drawing.Point(341, 203);
+            this.btnSendData.Location = new System.Drawing.Point(371, 204);
             this.btnSendData.Name = "btnSendData";
             this.btnSendData.Size = new System.Drawing.Size(140, 23);
             this.btnSendData.TabIndex = 17;
@@ -375,11 +387,119 @@
             this.btnSendData.UseVisualStyleBackColor = true;
             this.btnSendData.Click += new System.EventHandler(this.btnSendData_Click);
             // 
+            // btnXup
+            // 
+            this.btnXup.Location = new System.Drawing.Point(115, 271);
+            this.btnXup.Name = "btnXup";
+            this.btnXup.Size = new System.Drawing.Size(28, 58);
+            this.btnXup.TabIndex = 18;
+            this.btnXup.Text = "X up";
+            this.btnXup.UseVisualStyleBackColor = true;
+            // 
+            // tbXdown
+            // 
+            this.tbXdown.Location = new System.Drawing.Point(114, 419);
+            this.tbXdown.Name = "tbXdown";
+            this.tbXdown.Size = new System.Drawing.Size(29, 20);
+            this.tbXdown.TabIndex = 19;
+            // 
+            // btnXdown
+            // 
+            this.btnXdown.Location = new System.Drawing.Point(115, 355);
+            this.btnXdown.Name = "btnXdown";
+            this.btnXdown.Size = new System.Drawing.Size(28, 58);
+            this.btnXdown.TabIndex = 18;
+            this.btnXdown.Text = "X down";
+            this.btnXdown.UseVisualStyleBackColor = true;
+            // 
+            // tbYup
+            // 
+            this.tbYup.Location = new System.Drawing.Point(213, 330);
+            this.tbYup.Name = "tbYup";
+            this.tbYup.Size = new System.Drawing.Size(29, 20);
+            this.tbYup.TabIndex = 19;
+            // 
+            // tbXup
+            // 
+            this.tbXup.Location = new System.Drawing.Point(115, 248);
+            this.tbXup.Name = "tbXup";
+            this.tbXup.Size = new System.Drawing.Size(29, 20);
+            this.tbXup.TabIndex = 19;
+            // 
+            // btnYdown
+            // 
+            this.btnYdown.Location = new System.Drawing.Point(51, 325);
+            this.btnYdown.Name = "btnYdown";
+            this.btnYdown.Size = new System.Drawing.Size(58, 28);
+            this.btnYdown.TabIndex = 18;
+            this.btnYdown.Text = "Y down";
+            this.btnYdown.UseVisualStyleBackColor = true;
+            // 
+            // tbYdown
+            // 
+            this.tbYdown.Location = new System.Drawing.Point(16, 330);
+            this.tbYdown.Name = "tbYdown";
+            this.tbYdown.Size = new System.Drawing.Size(29, 20);
+            this.tbYdown.TabIndex = 19;
+            // 
+            // btnYup
+            // 
+            this.btnYup.Location = new System.Drawing.Point(149, 325);
+            this.btnYup.Name = "btnYup";
+            this.btnYup.Size = new System.Drawing.Size(58, 28);
+            this.btnYup.TabIndex = 18;
+            this.btnYup.Text = "Y up";
+            this.btnYup.UseVisualStyleBackColor = true;
+            // 
+            // btnZup
+            // 
+            this.btnZup.Location = new System.Drawing.Point(265, 271);
+            this.btnZup.Name = "btnZup";
+            this.btnZup.Size = new System.Drawing.Size(28, 58);
+            this.btnZup.TabIndex = 18;
+            this.btnZup.Text = "Z up";
+            this.btnZup.UseVisualStyleBackColor = true;
+            // 
+            // btnZdown
+            // 
+            this.btnZdown.Location = new System.Drawing.Point(265, 355);
+            this.btnZdown.Name = "btnZdown";
+            this.btnZdown.Size = new System.Drawing.Size(28, 58);
+            this.btnZdown.TabIndex = 18;
+            this.btnZdown.Text = "Z down";
+            this.btnZdown.UseVisualStyleBackColor = true;
+            // 
+            // tbZdown
+            // 
+            this.tbZdown.Location = new System.Drawing.Point(264, 419);
+            this.tbZdown.Name = "tbZdown";
+            this.tbZdown.Size = new System.Drawing.Size(29, 20);
+            this.tbZdown.TabIndex = 19;
+            // 
+            // tbZup
+            // 
+            this.tbZup.Location = new System.Drawing.Point(265, 248);
+            this.tbZup.Name = "tbZup";
+            this.tbZup.Size = new System.Drawing.Size(29, 20);
+            this.tbZup.TabIndex = 19;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1138, 529);
+            this.ClientSize = new System.Drawing.Size(1138, 578);
+            this.Controls.Add(this.tbYdown);
+            this.Controls.Add(this.tbZup);
+            this.Controls.Add(this.tbXup);
+            this.Controls.Add(this.tbYup);
+            this.Controls.Add(this.tbZdown);
+            this.Controls.Add(this.tbXdown);
+            this.Controls.Add(this.btnYup);
+            this.Controls.Add(this.btnYdown);
+            this.Controls.Add(this.btnZdown);
+            this.Controls.Add(this.btnXdown);
+            this.Controls.Add(this.btnZup);
+            this.Controls.Add(this.btnXup);
             this.Controls.Add(this.btnSendData);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -441,6 +561,18 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.Button btnCOMportsRefresh;
         private System.Windows.Forms.Button btnSendData;
+        private System.Windows.Forms.Button btnXup;
+        private System.Windows.Forms.TextBox tbXdown;
+        private System.Windows.Forms.Button btnXdown;
+        private System.Windows.Forms.TextBox tbYup;
+        private System.Windows.Forms.TextBox tbXup;
+        private System.Windows.Forms.Button btnYdown;
+        private System.Windows.Forms.TextBox tbYdown;
+        private System.Windows.Forms.Button btnYup;
+        private System.Windows.Forms.Button btnZup;
+        private System.Windows.Forms.Button btnZdown;
+        private System.Windows.Forms.TextBox tbZdown;
+        private System.Windows.Forms.TextBox tbZup;
     }
 }
 
