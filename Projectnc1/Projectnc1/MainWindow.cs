@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using System.Windows.Input;
 
 namespace Projectnc1
 {
@@ -171,7 +172,6 @@ namespace Projectnc1
             ConnectionUSB.SendAxisData('2', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[2].stepsInstruction));
             ConnectionUSB.SendMoveCommand();
         }
-
 
     }
 
