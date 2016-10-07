@@ -53,6 +53,7 @@
             this.testTextbox = new System.Windows.Forms.TextBox();
             this.ConnectionSettings = new System.Windows.Forms.TabControl();
             this.USBsettingsTab = new System.Windows.Forms.TabPage();
+            this.btnCOMportsRefresh = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.comboBoxCOMports = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -60,8 +61,15 @@
             this.LANsettingsTab = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnCOMportsRefresh = new System.Windows.Forms.Button();
             this.btnSendData = new System.Windows.Forms.Button();
+            this.tbMoveX = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbMoveY = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tbMoveZ = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.ConnectionSettings.SuspendLayout();
@@ -79,7 +87,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(1138, 24);
+            this.menuStrip.Size = new System.Drawing.Size(854, 24);
             this.menuStrip.TabIndex = 3;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -178,9 +186,9 @@
             this.toolStripStatusLabel2,
             this.toolStripStatusLabel1,
             this.toolStripProgressBar1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 507);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 448);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1138, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(854, 22);
             this.statusStrip1.TabIndex = 8;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -282,6 +290,17 @@
             this.USBsettingsTab.TabIndex = 0;
             this.USBsettingsTab.Text = "USB Settings";
             // 
+            // btnCOMportsRefresh
+            // 
+            this.btnCOMportsRefresh.Location = new System.Drawing.Point(187, 50);
+            this.btnCOMportsRefresh.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCOMportsRefresh.Name = "btnCOMportsRefresh";
+            this.btnCOMportsRefresh.Size = new System.Drawing.Size(49, 19);
+            this.btnCOMportsRefresh.TabIndex = 2;
+            this.btnCOMportsRefresh.Text = "Refresh";
+            this.btnCOMportsRefresh.UseVisualStyleBackColor = true;
+            this.btnCOMportsRefresh.Click += new System.EventHandler(this.btnCOMportsRefresh_Click);
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -338,7 +357,8 @@
             this.groupBox1.Controls.Add(this.btnConnect);
             this.groupBox1.Location = new System.Drawing.Point(12, 27);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(281, 219);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Size = new System.Drawing.Size(278, 175);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Connection";
@@ -348,38 +368,102 @@
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.btnSelectGFile);
             this.groupBox2.Controls.Add(this.txtBoxFileSelected);
-            this.groupBox2.Location = new System.Drawing.Point(12, 252);
+            this.groupBox2.Location = new System.Drawing.Point(9, 381);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(281, 66);
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Job";
             // 
-            // btnCOMportsRefresh
-            // 
-            this.btnCOMportsRefresh.Location = new System.Drawing.Point(188, 47);
-            this.btnCOMportsRefresh.Name = "btnCOMportsRefresh";
-            this.btnCOMportsRefresh.Size = new System.Drawing.Size(65, 23);
-            this.btnCOMportsRefresh.TabIndex = 2;
-            this.btnCOMportsRefresh.Text = "Refresh";
-            this.btnCOMportsRefresh.UseVisualStyleBackColor = true;
-            this.btnCOMportsRefresh.Click += new System.EventHandler(this.btnCOMportsRefresh_Click);
-            // 
             // btnSendData
             // 
-            this.btnSendData.Location = new System.Drawing.Point(341, 203);
+            this.btnSendData.Location = new System.Drawing.Point(209, 217);
+            this.btnSendData.Margin = new System.Windows.Forms.Padding(2);
             this.btnSendData.Name = "btnSendData";
-            this.btnSendData.Size = new System.Drawing.Size(140, 23);
+            this.btnSendData.Size = new System.Drawing.Size(71, 78);
             this.btnSendData.TabIndex = 17;
             this.btnSendData.Text = "Send data";
             this.btnSendData.UseVisualStyleBackColor = true;
             this.btnSendData.Click += new System.EventHandler(this.btnSendData_Click);
             // 
+            // tbMoveX
+            // 
+            this.tbMoveX.Location = new System.Drawing.Point(94, 219);
+            this.tbMoveX.Name = "tbMoveX";
+            this.tbMoveX.Size = new System.Drawing.Size(100, 20);
+            this.tbMoveX.TabIndex = 18;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(20, 222);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(68, 13);
+            this.label5.TabIndex = 19;
+            this.label5.Text = "Move X axis:";
+            // 
+            // tbMoveY
+            // 
+            this.tbMoveY.Location = new System.Drawing.Point(94, 246);
+            this.tbMoveY.Name = "tbMoveY";
+            this.tbMoveY.Size = new System.Drawing.Size(100, 20);
+            this.tbMoveY.TabIndex = 18;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(20, 249);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(68, 13);
+            this.label6.TabIndex = 19;
+            this.label6.Text = "Move Y axis:";
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(94, 275);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(100, 20);
+            this.textBox3.TabIndex = 18;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(20, 278);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(68, 13);
+            this.label7.TabIndex = 19;
+            this.label7.Text = "Move X axis:";
+            // 
+            // tbMoveZ
+            // 
+            this.tbMoveZ.Location = new System.Drawing.Point(94, 272);
+            this.tbMoveZ.Name = "tbMoveZ";
+            this.tbMoveZ.Size = new System.Drawing.Size(100, 20);
+            this.tbMoveZ.TabIndex = 18;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(20, 275);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(68, 13);
+            this.label8.TabIndex = 19;
+            this.label8.Text = "Move Z axis:";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1138, 529);
+            this.ClientSize = new System.Drawing.Size(854, 470);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.tbMoveZ);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.tbMoveY);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.tbMoveX);
             this.Controls.Add(this.btnSendData);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -441,6 +525,14 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.Button btnCOMportsRefresh;
         private System.Windows.Forms.Button btnSendData;
+        private System.Windows.Forms.TextBox tbMoveX;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tbMoveY;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox tbMoveZ;
+        private System.Windows.Forms.Label label8;
     }
 }
 
