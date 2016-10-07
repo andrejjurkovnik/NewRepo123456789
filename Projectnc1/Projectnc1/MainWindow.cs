@@ -69,7 +69,7 @@ namespace Projectnc1
 
             //Read all lines
             fileContent = File.ReadAllLines(@filePath);
-
+            //Briši komentar
             double[] positions;
             positions = new double[3];
             double[] ppositions = {0,0,0};
