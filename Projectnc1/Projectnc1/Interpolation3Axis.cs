@@ -8,6 +8,7 @@ namespace Projectnc1
 {
     class Interpolation3Axis
     {
+        //delete
         static int feed_rate = 20;
         static int stepsRev = 800;//number of steps per revolution
         static int gear = 5;//gear ratio - 5mm/rev

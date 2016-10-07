@@ -18,6 +18,7 @@ namespace Projectnc1
 {
     class ConnectionUSB
     {
+        //delte this comment
         /// <summary>
         /// Global objects/variables
         /// </summary>
