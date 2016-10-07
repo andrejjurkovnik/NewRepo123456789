@@ -22,7 +22,7 @@ namespace Projectnc1
         /// <summary>
         /// Global objects/variables
         /// </summary>
-        static SerialPort USBserialPort;
+        public SerialPort USBserialPort;
         public string[] portNames;
 
 
@@ -33,8 +33,6 @@ namespace Projectnc1
             USBserialPort = new SerialPort();                       //Create Serial port object      
             USBserialPort.BaudRate = baudRate;
             portNames = SerialPort.GetPortNames();                  //Gets all the available COM-ports 
-
-
         }
 
         public bool ConnectUSB(int baudRate, string COMport)
@@ -67,7 +65,7 @@ namespace Projectnc1
             portNames = SerialPort.GetPortNames();                  //Gets all the available COM-ports 
         }
 
-        static public void SendAxisData(char axisNum, UInt16 acceleration, UInt16 deceleration, UInt16 speed, Int32 steps)
+        public void SendAxisData(char axisNum, UInt16 acceleration, UInt16 deceleration, UInt16 speed, Int32 steps)
         {
             //Send Axis Number
             byte[] toSend;
@@ -108,7 +106,7 @@ namespace Projectnc1
             //USBserialPort.Close();
         }
 
-        static public void SendMoveCommand()
+        public void SendMoveCommand()
         {
             USBserialPort.Write("m");
         }
