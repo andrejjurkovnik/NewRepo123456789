@@ -68,6 +68,12 @@
     <Compile Include="ConnectionUSBsettings.Designer.cs">
       <DependentUpon>ConnectionUSBsettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="EventHandlers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Functions.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Interpolation3Axis.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
