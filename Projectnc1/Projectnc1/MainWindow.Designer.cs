@@ -91,7 +91,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(1138, 24);
+            this.menuStrip.Size = new System.Drawing.Size(854, 24);
             this.menuStrip.TabIndex = 3;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -190,9 +190,9 @@
             this.toolStripStatusLabel2,
             this.toolStripStatusLabel1,
             this.toolStripProgressBar1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 556);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 448);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1138, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(854, 22);
             this.statusStrip1.TabIndex = 8;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -289,16 +289,17 @@
             this.USBsettingsTab.Controls.Add(this.comboBoxBaudRate);
             this.USBsettingsTab.Location = new System.Drawing.Point(4, 22);
             this.USBsettingsTab.Name = "USBsettingsTab";
-            this.USBsettingsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.USBsettingsTab.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
             this.USBsettingsTab.Size = new System.Drawing.Size(259, 87);
             this.USBsettingsTab.TabIndex = 0;
             this.USBsettingsTab.Text = "USB Settings";
             // 
             // btnCOMportsRefresh
             // 
-            this.btnCOMportsRefresh.Location = new System.Drawing.Point(188, 47);
+            this.btnCOMportsRefresh.Location = new System.Drawing.Point(187, 50);
+            this.btnCOMportsRefresh.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCOMportsRefresh.Name = "btnCOMportsRefresh";
-            this.btnCOMportsRefresh.Size = new System.Drawing.Size(65, 23);
+            this.btnCOMportsRefresh.Size = new System.Drawing.Size(49, 19);
             this.btnCOMportsRefresh.TabIndex = 2;
             this.btnCOMportsRefresh.Text = "Refresh";
             this.btnCOMportsRefresh.UseVisualStyleBackColor = true;
@@ -345,7 +346,7 @@
             // 
             this.LANsettingsTab.Location = new System.Drawing.Point(4, 22);
             this.LANsettingsTab.Name = "LANsettingsTab";
-            this.LANsettingsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.LANsettingsTab.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
             this.LANsettingsTab.Size = new System.Drawing.Size(259, 87);
             this.LANsettingsTab.TabIndex = 1;
             this.LANsettingsTab.Text = "LAN settings";
@@ -360,7 +361,8 @@
             this.groupBox1.Controls.Add(this.btnConnect);
             this.groupBox1.Location = new System.Drawing.Point(12, 27);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(282, 215);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Size = new System.Drawing.Size(278, 175);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Connection";
@@ -370,7 +372,8 @@
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.btnSelectGFile);
             this.groupBox2.Controls.Add(this.txtBoxFileSelected);
-            this.groupBox2.Location = new System.Drawing.Point(12, 469);
+            this.groupBox2.Location = new System.Drawing.Point(9, 381);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(281, 66);
             this.groupBox2.TabIndex = 16;
@@ -379,7 +382,8 @@
             // 
             // btnSendData
             // 
-            this.btnSendData.Location = new System.Drawing.Point(371, 204);
+            this.btnSendData.Location = new System.Drawing.Point(397, 150);
+            this.btnSendData.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSendData.Name = "btnSendData";
             this.btnSendData.Size = new System.Drawing.Size(140, 23);
             this.btnSendData.TabIndex = 17;
@@ -389,105 +393,117 @@
             // 
             // btnXup
             // 
-            this.btnXup.Location = new System.Drawing.Point(115, 271);
+            this.btnXup.Location = new System.Drawing.Point(86, 220);
+            this.btnXup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnXup.Name = "btnXup";
-            this.btnXup.Size = new System.Drawing.Size(28, 58);
+            this.btnXup.Size = new System.Drawing.Size(21, 47);
             this.btnXup.TabIndex = 18;
             this.btnXup.Text = "X up";
             this.btnXup.UseVisualStyleBackColor = true;
             // 
             // tbXdown
             // 
-            this.tbXdown.Location = new System.Drawing.Point(114, 419);
+            this.tbXdown.Location = new System.Drawing.Point(86, 340);
+            this.tbXdown.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tbXdown.Name = "tbXdown";
-            this.tbXdown.Size = new System.Drawing.Size(29, 20);
+            this.tbXdown.Size = new System.Drawing.Size(23, 20);
             this.tbXdown.TabIndex = 19;
             // 
             // btnXdown
             // 
-            this.btnXdown.Location = new System.Drawing.Point(115, 355);
+            this.btnXdown.Location = new System.Drawing.Point(86, 288);
+            this.btnXdown.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnXdown.Name = "btnXdown";
-            this.btnXdown.Size = new System.Drawing.Size(28, 58);
+            this.btnXdown.Size = new System.Drawing.Size(21, 47);
             this.btnXdown.TabIndex = 18;
             this.btnXdown.Text = "X down";
             this.btnXdown.UseVisualStyleBackColor = true;
             // 
             // tbYup
             // 
-            this.tbYup.Location = new System.Drawing.Point(213, 330);
+            this.tbYup.Location = new System.Drawing.Point(160, 268);
+            this.tbYup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tbYup.Name = "tbYup";
-            this.tbYup.Size = new System.Drawing.Size(29, 20);
+            this.tbYup.Size = new System.Drawing.Size(23, 20);
             this.tbYup.TabIndex = 19;
             // 
             // tbXup
             // 
-            this.tbXup.Location = new System.Drawing.Point(115, 248);
+            this.tbXup.Location = new System.Drawing.Point(86, 202);
+            this.tbXup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tbXup.Name = "tbXup";
-            this.tbXup.Size = new System.Drawing.Size(29, 20);
+            this.tbXup.Size = new System.Drawing.Size(23, 20);
             this.tbXup.TabIndex = 19;
             // 
             // btnYdown
             // 
-            this.btnYdown.Location = new System.Drawing.Point(51, 325);
+            this.btnYdown.Location = new System.Drawing.Point(38, 264);
+            this.btnYdown.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnYdown.Name = "btnYdown";
-            this.btnYdown.Size = new System.Drawing.Size(58, 28);
+            this.btnYdown.Size = new System.Drawing.Size(44, 23);
             this.btnYdown.TabIndex = 18;
             this.btnYdown.Text = "Y down";
             this.btnYdown.UseVisualStyleBackColor = true;
             // 
             // tbYdown
             // 
-            this.tbYdown.Location = new System.Drawing.Point(16, 330);
+            this.tbYdown.Location = new System.Drawing.Point(12, 268);
+            this.tbYdown.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tbYdown.Name = "tbYdown";
-            this.tbYdown.Size = new System.Drawing.Size(29, 20);
+            this.tbYdown.Size = new System.Drawing.Size(23, 20);
             this.tbYdown.TabIndex = 19;
             // 
             // btnYup
             // 
-            this.btnYup.Location = new System.Drawing.Point(149, 325);
+            this.btnYup.Location = new System.Drawing.Point(112, 264);
+            this.btnYup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnYup.Name = "btnYup";
-            this.btnYup.Size = new System.Drawing.Size(58, 28);
+            this.btnYup.Size = new System.Drawing.Size(44, 23);
             this.btnYup.TabIndex = 18;
             this.btnYup.Text = "Y up";
             this.btnYup.UseVisualStyleBackColor = true;
             // 
             // btnZup
             // 
-            this.btnZup.Location = new System.Drawing.Point(265, 271);
+            this.btnZup.Location = new System.Drawing.Point(201, 226);
+            this.btnZup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnZup.Name = "btnZup";
-            this.btnZup.Size = new System.Drawing.Size(28, 58);
+            this.btnZup.Size = new System.Drawing.Size(21, 47);
             this.btnZup.TabIndex = 18;
             this.btnZup.Text = "Z up";
             this.btnZup.UseVisualStyleBackColor = true;
             // 
             // btnZdown
             // 
-            this.btnZdown.Location = new System.Drawing.Point(265, 355);
+            this.btnZdown.Location = new System.Drawing.Point(201, 277);
+            this.btnZdown.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnZdown.Name = "btnZdown";
-            this.btnZdown.Size = new System.Drawing.Size(28, 58);
+            this.btnZdown.Size = new System.Drawing.Size(21, 47);
             this.btnZdown.TabIndex = 18;
             this.btnZdown.Text = "Z down";
             this.btnZdown.UseVisualStyleBackColor = true;
             // 
             // tbZdown
             // 
-            this.tbZdown.Location = new System.Drawing.Point(264, 419);
+            this.tbZdown.Location = new System.Drawing.Point(201, 328);
+            this.tbZdown.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tbZdown.Name = "tbZdown";
-            this.tbZdown.Size = new System.Drawing.Size(29, 20);
+            this.tbZdown.Size = new System.Drawing.Size(23, 20);
             this.tbZdown.TabIndex = 19;
             // 
             // tbZup
             // 
-            this.tbZup.Location = new System.Drawing.Point(265, 248);
+            this.tbZup.Location = new System.Drawing.Point(201, 202);
+            this.tbZup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tbZup.Name = "tbZup";
-            this.tbZup.Size = new System.Drawing.Size(29, 20);
+            this.tbZup.Size = new System.Drawing.Size(23, 20);
             this.tbZup.TabIndex = 19;
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1138, 578);
+            this.ClientSize = new System.Drawing.Size(854, 470);
             this.Controls.Add(this.tbYdown);
             this.Controls.Add(this.tbZup);
             this.Controls.Add(this.tbXup);
@@ -507,7 +523,7 @@
             this.Controls.Add(this.testTextbox);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "MainWindow";
             this.Text = "CNC";
             this.menuStrip.ResumeLayout(false);
