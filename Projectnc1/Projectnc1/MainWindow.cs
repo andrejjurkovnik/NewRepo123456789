@@ -134,7 +134,7 @@ namespace Projectnc1
 
         private void btnSendData_Click(object sender, EventArgs e)
         {
-            ConnectionUSB.SendAxisData(Convert.ToChar(41631), 150, 200, 10, 1000);
+            ConnectionUSB.SendAxisData('1', 8226, 8226, 8226, 800);
         }
     }
 
