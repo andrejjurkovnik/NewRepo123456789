@@ -135,15 +135,41 @@ namespace Projectnc1
         {
             double[] movePositions;
             movePositions = new double[3];
-            movePositions[0] = interpolation.Axis[0].position + Convert.ToDouble(tbMoveX.Text);
-            movePositions[1] = interpolation.Axis[1].position + Convert.ToDouble(tbMoveY.Text);
-            movePositions[2] = interpolation.Axis[2].position + Convert.ToDouble(tbMoveZ.Text);
+            try
+            {
+                movePositions[0] = interpolation.Axis[0].position + Convert.ToDouble(tbMoveX.Text);
+            }
+            catch
+            {
+                MessageBox.Show("Invalid number");
+                movePositions[0] = interpolation.Axis[0].position;
+                tbMoveX.Text = "0";
+            }
+            try
+            {
+                movePositions[1] = interpolation.Axis[1].position + Convert.ToDouble(tbMoveY.Text);
+            }
+            catch
+            {
+                MessageBox.Show("Invalid number");
+                movePositions[1] = interpolation.Axis[1].position;
+                tbMoveY.Text = "0";
+            }
+            try
+            {
+                movePositions[2] = interpolation.Axis[2].position + Convert.ToDouble(tbMoveZ.Text);
+            }
+            catch
+            {
+                MessageBox.Show("Invalid number");
+                movePositions[2] = interpolation.Axis[2].position;
+                tbMoveZ.Text = "0";
+            }
             interpolation.rapidPositioning(movePositions);
             ConnectionUSB.SendAxisData('0', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[0].stepsInstruction));
             ConnectionUSB.SendAxisData('1', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[1].stepsInstruction));
             ConnectionUSB.SendAxisData('2', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[2].stepsInstruction));
             ConnectionUSB.SendMoveCommand();
-            testTextbox.Text = Convert.ToString(interpolation.Axis[0].position);
         }
 
 
