@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using System.Windows.Input;
+using System.IO.Ports;
 
 namespace Projectnc1
 {
@@ -25,6 +26,8 @@ namespace Projectnc1
         string filePath = "";           //G file path
         string[] fileContent;
         Interpolation3Axis interpolation;
+        int GcodeIndex = 0;
+        int Gmode = 0;
 
         public MainWindow()
         {
@@ -41,6 +44,64 @@ namespace Projectnc1
             comboBoxBaudRate.SelectedIndex = 0;                         //Set selected Baud rate index
 
             interpolation = new Interpolation3Axis(3);
+            USBconnection.USBserialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
+        }
+
+        private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
+        {
+            if (USBconnection.USBserialPort.ReadChar() == 'r')
+            {
+                double[] positions;
+                positions = new double[3];
+
+                fileContent[GcodeIndex].ToUpper();
+                fileContent[GcodeIndex].Replace(",", ".");
+
+                if (fileContent[GcodeIndex].Contains("G00")) Gmode = 0;
+                else if (fileContent[GcodeIndex].Contains("G01")) Gmode = 1;
+                else if (fileContent[GcodeIndex].Contains("G02")) Gmode = 2;
+                else if (fileContent[GcodeIndex].Contains("G03")) Gmode = 3;
+                else if (fileContent[GcodeIndex].Contains("M02")) Gmode = 200;
+
+                double[] currentAxisPositions;
+                currentAxisPositions = new double[3];
+
+                switch (Gmode)
+                {
+                    case 0:
+                        currentAxisPositions[0] = interpolation.Axis[0].position;
+                        currentAxisPositions[1] = interpolation.Axis[1].position;
+                        currentAxisPositions[2] = interpolation.Axis[2].position;
+                        ReadGCode.readG00G01(fileContent[GcodeIndex], currentAxisPositions);
+                        positions = ReadGCode.positions;
+                        interpolation.rapidPositioning(positions);
+                        //send data
+                        break;
+                    case 1:
+                        currentAxisPositions = new double[3];
+                        currentAxisPositions[0] = interpolation.Axis[0].position;
+                        currentAxisPositions[1] = interpolation.Axis[1].position;
+                        currentAxisPositions[2] = interpolation.Axis[2].position;
+                        ReadGCode.readG00G01(fileContent[GcodeIndex], currentAxisPositions);
+                        positions = ReadGCode.positions;
+                        interpolation.linearInterpolation(positions);
+                        break;
+                    case 200:
+                        break;
+                    default:
+                        break;
+                }
+
+                if(Gmode < 10)
+                {
+                    GcodeIndex++;
+
+                    USBconnection.SendAxisData('0', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[0].stepsInstruction));
+                    USBconnection.SendAxisData('1', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[1].stepsInstruction));
+                    USBconnection.SendAxisData('2', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[2].stepsInstruction));
+                    USBconnection.SendMoveCommand();
+                }
+            }
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
@@ -72,55 +133,23 @@ namespace Projectnc1
 
             //Read all lines
             fileContent = File.ReadAllLines(@filePath);
-            //Briši komentar
-            double[] positions;
-            positions = new double[3];
-
-            foreach (string line in fileContent)
-            {
-                //Convert to upper
-                line.ToUpper();
-
-                //Replace comma with dot
-                line.Replace(",", ".");
-
-                string currentCommand = "G00";
-                string returnCommandType = ReadGCode.getCommandType(line);
-
-                if (returnCommandType == "previous")
-                {
-                    currentCommand = returnCommandType;
-                }
-
-                double[] currentAxisPositions;
-                currentAxisPositions = new double[3];
-
-                switch (currentCommand)
-                {
-                    case "G00":
-                        currentAxisPositions[0] = interpolation.Axis[0].position;
-                        currentAxisPositions[1] = interpolation.Axis[1].position;
-                        currentAxisPositions[2] = interpolation.Axis[2].position;
-                        ReadGCode.readG00G01(line, currentAxisPositions);
-                        positions = ReadGCode.positions;
-                        interpolation.rapidPositioning(positions);
-                        //send data
-                        break;
-                    case "G01":
-                        currentAxisPositions = new double[3];
-                        currentAxisPositions[0] = interpolation.Axis[0].position;
-                        currentAxisPositions[1] = interpolation.Axis[1].position;
-                        currentAxisPositions[2] = interpolation.Axis[2].position;
-                        ReadGCode.readG00G01(line, currentAxisPositions);
-                        ReadGCode.readG00G01(line, currentAxisPositions);
-                        positions = ReadGCode.positions;
-                        interpolation.linearInterpolation(positions);
-                        break;
-                    default:
-                        break;
-                }
-            }
+            StartExecuteGFile();
         }
+
+        private void StartExecuteGFile()
+        {
+            GcodeIndex = 0;
+            //USBconnection.SendAxisData('0', 8226, 8226, 8226, 0);
+            //USBconnection.SendAxisData('1', 8226, 8226, 8226, 0);
+            //USBconnection.SendAxisData('2', 8226, 8226, 8226, 0);
+            //USBconnection.SendMoveCommand();
+            USBconnection.SendAxisData('0', 8226, 8226, 8226, 0);
+            USBconnection.SendAxisData('1', 8226, 8226, 8226, 0);
+            USBconnection.SendAxisData('2', 8226, 8226, 8226, 0);
+            USBconnection.SendMoveCommand();
+        }
+
+
 
         private void btnCOMportsRefresh_Click(object sender, EventArgs e)
         {
@@ -166,10 +195,10 @@ namespace Projectnc1
                 tbMoveZ.Text = "0";
             }
             interpolation.rapidPositioning(movePositions);
-            ConnectionUSB.SendAxisData('0', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[0].stepsInstruction));
-            ConnectionUSB.SendAxisData('1', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[1].stepsInstruction));
-            ConnectionUSB.SendAxisData('2', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[2].stepsInstruction));
-            ConnectionUSB.SendMoveCommand();
+            USBconnection.SendAxisData('0', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[0].stepsInstruction));
+            USBconnection.SendAxisData('1', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[1].stepsInstruction));
+            USBconnection.SendAxisData('2', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[2].stepsInstruction));
+            USBconnection.SendMoveCommand();
         }
         
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
