@@ -57,18 +57,23 @@ namespace Projectnc1
 
         private void SendExecutingGCode()
         {
-            if(reader.GcodeExecuting)
+            try                                         //try catch loop is because we can move axis with NULL reader.GcodeExecuting
             {
-                USBconnection.SendAxisData('0', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[0].steps[reader.executingLine]));
-                USBconnection.SendAxisData('1', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[1].steps[reader.executingLine]));
-                USBconnection.SendAxisData('2', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[2].steps[reader.executingLine]));
-                USBconnection.SendMoveCommand();
-                reader.executingLine++;
-                if (reader.executingLine == interpolation.Axis[0].steps.Length)
+                if (reader.GcodeExecuting)
                 {
-                    reader.GcodeExecuting = false;
+                    USBconnection.SendAxisData('0', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[0].steps[reader.executingLine]));
+                    USBconnection.SendAxisData('1', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[1].steps[reader.executingLine]));
+                    USBconnection.SendAxisData('2', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[2].steps[reader.executingLine]));
+                    USBconnection.SendMoveCommand();
+                    reader.executingLine++;
+                    if (reader.executingLine == interpolation.Axis[0].steps.Length)
+                    {
+                        reader.GcodeExecuting = false;
+                    }
                 }
             }
+            catch
+            { }
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
