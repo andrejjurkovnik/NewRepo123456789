@@ -18,6 +18,20 @@ namespace Projectnc1
     {
 
 
+        private void StartExecuteGFile()
+        {
+            GcodeIndex = 0;
+            //USBconnection.SendAxisData('0', 8226, 8226, 8226, 0);
+            //USBconnection.SendAxisData('1', 8226, 8226, 8226, 0);
+            //USBconnection.SendAxisData('2', 8226, 8226, 8226, 0);
+            //USBconnection.SendMoveCommand();
+            USBconnection.SendAxisData('0', 8226, 8226, 8226, 0);
+            USBconnection.SendAxisData('1', 8226, 8226, 8226, 0);
+            USBconnection.SendAxisData('2', 8226, 8226, 8226, 0);
+            USBconnection.SendMoveCommand();
+        }
+
+
 
     }
 }
