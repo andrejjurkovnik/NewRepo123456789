@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Globalization;
 using System.Windows.Input;
 using System.IO.Ports;
+using System.Threading;
 
 namespace Projectnc1
 {
@@ -69,6 +70,7 @@ namespace Projectnc1
                     USBconnection.SendAxisData('0', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[0].steps[reader.executingLine]));
                     USBconnection.SendAxisData('1', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[1].steps[reader.executingLine]));
                     USBconnection.SendAxisData('2', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[2].steps[reader.executingLine]));
+                    Thread.Sleep(300);
                     USBconnection.SendMoveCommand();
                 }
             }
