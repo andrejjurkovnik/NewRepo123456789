@@ -13,28 +13,28 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using System.Timers;
 
 namespace Projectnc1
 {
     class ConnectionUSB
     {
-        //delte this comment
-        /// <summary>
-        /// Global objects/variables
-        /// </summary>
         public SerialPort USBserialPort;
         public string[] portNames;
 
-        public int debugI = 0;
         public string receivedData;
 
         public string checkData;
-
         public string wrongData;
 
+        System.Timers.Timer USBtimer;
 
         public ConnectionUSB(int baudRate = 9600)
         {
+            USBtimer = new System.Timers.Timer();
+            USBtimer.Elapsed += new ElapsedEventHandler(USBTimeout);
+            USBtimer.Interval = 100;
+            //USBtimer.AutoReset = true;
             //Set up Serial port properties
             USBserialPort = new SerialPort();                       //Create Serial port object      
             USBserialPort.BaudRate = baudRate;
@@ -43,24 +43,42 @@ namespace Projectnc1
             USBserialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
         }
 
+        private void USBTimeout(object sender, ElapsedEventArgs e)
+        {
+            USBtimer.Stop();
+            MessageBox.Show("fail timer");
+            wrongData = receivedData;
+            receivedData = "";
+            SendAccData(Convert.ToUInt16(checkData));
+
+        }
+
+        public void startTimer()
+        {
+            USBtimer.Start();
+        }
+
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
-            debugI++;
             receivedData = receivedData + USBserialPort.ReadExisting();
-            //if (receivedData.ElementAt(0) == 'a') MessageBox.Show("success");
-            
+
+            USBtimer.Stop();
+            USBtimer.Start();
+
             if (receivedData == checkData)
             {
+                USBtimer.Stop();
                 receivedData = "";
                 MessageBox.Show("success");
             }
 
-            else if (receivedData != checkData)
+            if (receivedData != checkData && receivedData.Length == checkData.Length)
             {
+                USBtimer.Stop();
                 MessageBox.Show("fail");
                 wrongData = receivedData;
                 receivedData = "";
-                SendAccData(Convert.ToUInt16(checkData.Remove(0, 1)));
+                SendAccData(Convert.ToUInt16(checkData));
             }
             //if (USBconnection.USBserialPort.ReadChar() == 'r')
             //{
@@ -77,7 +95,7 @@ namespace Projectnc1
             USBserialPort.Write("a");
             toSend = BitConverter.GetBytes(acceleration);
             USBserialPort.Write(toSend, 0, 2);
-            checkData = "a" + acceleration.ToString();
+            checkData = acceleration.ToString();
         }
 
         public bool ConnectUSB(int baudRate, string COMport)

@@ -264,6 +264,7 @@ namespace Projectnc1
         private void sendDebbug_Click(object sender, EventArgs e)
         {
             USBconnection.SendAccData(455);
+            USBconnection.startTimer();
         }
 
         //private void SendAccData(UInt16 acceleration)
