@@ -244,27 +244,41 @@ namespace Projectnc1
 
         private void buttonDebuggTest_Click(object sender, EventArgs e)
         {
-            testTextbox.AppendText(USBconnection.receivedData);
-            USBconnection.receivedData = "";
-            //testTextbox.Text += Environment.NewLine;
-            //testTextbox.AppendText(USBconnection.debugI.ToString());
-            testTextbox.Text += Environment.NewLine;
-            testTextbox.AppendText(USBconnection.checkData);
-            testTextbox.Text += Environment.NewLine;
-            testTextbox.AppendText(USBconnection.checkData.Remove(0,1));
-            try
-            {
-                testTextbox.Text += Environment.NewLine;
-                testTextbox.AppendText(USBconnection.wrongData);
-            }
-            catch
-            { }
+            USBconnection.USBserialPort.Write("0");
+            USBconnection.SendProfileData('a', 8224);
+            USBconnection.startTimer();
+            while (!USBconnection.sendWithCheckComplete) ;
+            USBconnection.SendProfileData('d', 8224);
+            USBconnection.startTimer();
+            while (!USBconnection.sendWithCheckComplete) ;
+            USBconnection.SendProfileData('f', 8224);
+            USBconnection.startTimer();
+            while (!USBconnection.sendWithCheckComplete) ;
+            USBconnection.SendStepData(-800);
+            while (!USBconnection.sendWithCheckComplete) ;
+            testTextbox.AppendText(USBconnection.dataDisplay);
+            USBconnection.USBserialPort.Write("c");
+            USBconnection.SendMoveCommand();
         }
 
         private void sendDebbug_Click(object sender, EventArgs e)
         {
-            USBconnection.SendAccData(455);
+            USBconnection.USBserialPort.Write("0");
+            USBconnection.SendProfileData('a',8224);
             USBconnection.startTimer();
+            while (!USBconnection.sendWithCheckComplete) ;
+            USBconnection.SendProfileData('d', 8224);
+            USBconnection.startTimer();
+            while (!USBconnection.sendWithCheckComplete) ;
+            USBconnection.SendProfileData('f', 8224);
+            USBconnection.startTimer();
+            while (!USBconnection.sendWithCheckComplete) ;
+            USBconnection.SendStepData(800);
+            while (!USBconnection.sendWithCheckComplete) ;
+            testTextbox.AppendText(USBconnection.dataDisplay);
+            USBconnection.USBserialPort.Write("c");
+            USBconnection.SendMoveCommand();
+
         }
 
         //private void SendAccData(UInt16 acceleration)

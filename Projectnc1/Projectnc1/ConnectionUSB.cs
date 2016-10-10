@@ -22,35 +22,41 @@ namespace Projectnc1
         public SerialPort USBserialPort;
         public string[] portNames;
 
+        public string dataDisplay;
         public string receivedData;
-
         public string checkData;
-        public string wrongData;
+        public char currentProfilePart;
+
+        public bool sendWithCheckComplete;
+        private bool sendSteps = false;
 
         System.Timers.Timer USBtimer;
 
         public ConnectionUSB(int baudRate = 9600)
         {
-            USBtimer = new System.Timers.Timer();
+            USBtimer = new System.Timers.Timer();                   //Timer for USB error check
             USBtimer.Elapsed += new ElapsedEventHandler(USBTimeout);
-            USBtimer.Interval = 100;
-            //USBtimer.AutoReset = true;
+            USBtimer.Interval = 100;                                //Timer interval set to 100ms
             //Set up Serial port properties
             USBserialPort = new SerialPort();                       //Create Serial port object      
             USBserialPort.BaudRate = baudRate;
             portNames = SerialPort.GetPortNames();                  //Gets all the available COM-ports 
-
             USBserialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
         }
 
         private void USBTimeout(object sender, ElapsedEventArgs e)
         {
             USBtimer.Stop();
-            MessageBox.Show("fail timer");
-            wrongData = receivedData;
+            //MessageBox.Show("fail timer");
             receivedData = "";
-            SendAccData(Convert.ToUInt16(checkData));
-
+            if (sendSteps)
+            {
+                SendStepData(Convert.ToInt32(checkData));
+            }
+            else
+            {
+                SendProfileData(currentProfilePart, Convert.ToUInt16(checkData));
+            }
         }
 
         public void startTimer()
@@ -68,17 +74,23 @@ namespace Projectnc1
             if (receivedData == checkData)
             {
                 USBtimer.Stop();
+                dataDisplay = receivedData;
                 receivedData = "";
-                MessageBox.Show("success");
+                sendWithCheckComplete = true;
             }
 
             if (receivedData != checkData && receivedData.Length == checkData.Length)
             {
                 USBtimer.Stop();
-                MessageBox.Show("fail");
-                wrongData = receivedData;
                 receivedData = "";
-                SendAccData(Convert.ToUInt16(checkData));
+                if(sendSteps)
+                {
+                    SendStepData(Convert.ToInt32(checkData));
+                }
+                else
+                {
+                    SendProfileData(currentProfilePart, Convert.ToUInt16(checkData));
+                }
             }
             //if (USBconnection.USBserialPort.ReadChar() == 'r')
             //{
@@ -86,16 +98,43 @@ namespace Projectnc1
             //}
         }
 
-        public void SendAccData(UInt16 acceleration)
+        public void SendSelectSlave(char axisNum)
         {
+            USBserialPort.Write(axisNum.ToString());
+        }
+
+        public void SendProfileData(char profilePart, UInt16 profileData)
+        {
+            sendSteps = false;
+            USBtimer.Interval = 100;
+            sendWithCheckComplete = false;
             byte[] toSend;
             toSend = new byte[2];
 
-            USBserialPort.Write("0");
-            USBserialPort.Write("a");
-            toSend = BitConverter.GetBytes(acceleration);
+            checkData = profileData.ToString();
+            currentProfilePart = profilePart;
+
+            //Send a - for acceleration
+            //Send d - for deceleration
+            //Send f - for speed
+            USBserialPort.Write(profilePart.ToString());
+            //send data
+            toSend = BitConverter.GetBytes(profileData);
             USBserialPort.Write(toSend, 0, 2);
-            checkData = acceleration.ToString();
+        }
+
+        public void SendStepData(Int32 steps)
+        {
+            sendSteps = true;
+            USBtimer.Interval = 700;
+            //sendWithCheckComplete = false;
+            checkData = steps.ToString();
+            //Send s - for steeps
+            USBserialPort.Write("s");
+            //send steps value
+            USBserialPort.Write(Convert.ToString(steps));
+            //confirm steps value
+            USBserialPort.Write("e");
         }
 
         public bool ConnectUSB(int baudRate, string COMport)
@@ -130,6 +169,18 @@ namespace Projectnc1
 
         public void SendAxisData(char axisNum, UInt16 acceleration, UInt16 deceleration, UInt16 speed, Int32 steps)
         {
+            SendSelectSlave(axisNum);
+
+            SendProfileData('a', acceleration);
+            while (!sendWithCheckComplete) ;
+            SendProfileData('d', deceleration);
+            while (!sendWithCheckComplete) ;
+            SendProfileData('f', speed);
+            while (!sendWithCheckComplete) ;
+            SendStepData(steps);
+
+            USBserialPort.Write("c");
+            /*
             //Send Axis Number
             byte[] toSend;
             toSend = new byte[2];
@@ -163,10 +214,8 @@ namespace Projectnc1
             //Send deceleration value
             USBserialPort.Write(Convert.ToString(steps));
             USBserialPort.Write("e");
-
-            USBserialPort.Write("c");
-
-            //USBserialPort.Close();
+            
+            USBserialPort.Write("c");*/
         }
 
         public void SendMoveCommand()
