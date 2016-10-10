@@ -25,6 +25,12 @@ namespace Projectnc1
         public SerialPort USBserialPort;
         public string[] portNames;
 
+        public int debugI = 0;
+        public string receivedData;
+
+        public string checkData;
+
+        public string wrongData;
 
 
         public ConnectionUSB(int baudRate = 9600)
@@ -34,7 +40,44 @@ namespace Projectnc1
             USBserialPort.BaudRate = baudRate;
             portNames = SerialPort.GetPortNames();                  //Gets all the available COM-ports 
 
+            USBserialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
+        }
 
+        private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
+        {
+            debugI++;
+            receivedData = receivedData + USBserialPort.ReadExisting();
+            //if (receivedData.ElementAt(0) == 'a') MessageBox.Show("success");
+            
+            if (receivedData == checkData)
+            {
+                receivedData = "";
+                MessageBox.Show("success");
+            }
+
+            else if (receivedData != checkData)
+            {
+                MessageBox.Show("fail");
+                wrongData = receivedData;
+                receivedData = "";
+                SendAccData(Convert.ToUInt16(checkData.Remove(0, 1)));
+            }
+            //if (USBconnection.USBserialPort.ReadChar() == 'r')
+            //{
+            //    SendExecutingGCode();
+            //}
+        }
+
+        public void SendAccData(UInt16 acceleration)
+        {
+            byte[] toSend;
+            toSend = new byte[2];
+
+            USBserialPort.Write("0");
+            USBserialPort.Write("a");
+            toSend = BitConverter.GetBytes(acceleration);
+            USBserialPort.Write(toSend, 0, 2);
+            checkData = "a" + acceleration.ToString();
         }
 
         public bool ConnectUSB(int baudRate, string COMport)

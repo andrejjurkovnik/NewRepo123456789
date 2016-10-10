@@ -33,7 +33,6 @@ namespace Projectnc1
         {
             //Form start
             InitializeComponent();
-            this.KeyPreview = true;
 
             //Set up connection object
             USBconnection = new ConnectionUSB();                        //Set up connection with default settings
@@ -44,16 +43,6 @@ namespace Projectnc1
             comboBoxBaudRate.SelectedIndex = 0;                         //Set selected Baud rate index
 
             interpolation = new Interpolation3Axis(3);
-
-            USBconnection.USBserialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
-        }
-
-        private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
-        {
-            if (USBconnection.USBserialPort.ReadChar() == 'r')
-            {
-                SendExecutingGCode();
-            }
         }
 
         private void SendExecutingGCode()
@@ -67,9 +56,9 @@ namespace Projectnc1
                 }
                 if (reader.GcodeExecuting)
                 {
-                    USBconnection.SendAxisData('0', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[0].steps[reader.executingLine]));
-                    USBconnection.SendAxisData('1', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[1].steps[reader.executingLine]));
-                    USBconnection.SendAxisData('2', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[2].steps[reader.executingLine]));
+                    USBconnection.SendAxisData('0', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[0].steps[reader.executingLine]));
+                    USBconnection.SendAxisData('1', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[1].steps[reader.executingLine]));
+                    USBconnection.SendAxisData('2', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[2].steps[reader.executingLine]));
                     Thread.Sleep(300);
                     USBconnection.SendMoveCommand();
                 }
@@ -175,9 +164,9 @@ namespace Projectnc1
             {
                 testTextbox.Text = testTextbox.Text + Environment.NewLine + Convert.ToString(a);
             }
-            USBconnection.SendAxisData('0', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[0].steps[reader.executingLine]));
-            USBconnection.SendAxisData('1', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[1].steps[reader.executingLine]));
-            USBconnection.SendAxisData('2', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[2].steps[reader.executingLine]));
+            USBconnection.SendAxisData('0', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[0].steps[reader.executingLine]));
+            USBconnection.SendAxisData('1', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[1].steps[reader.executingLine]));
+            USBconnection.SendAxisData('2', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[2].steps[reader.executingLine]));
             USBconnection.SendMoveCommand();
         }
 
@@ -225,9 +214,9 @@ namespace Projectnc1
                 tbMoveZ.Text = "0";
             }
             interpolation.rapidPositioning(movePositions);
-            USBconnection.SendAxisData('0', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[0].stepsInstruction));
-            USBconnection.SendAxisData('1', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[1].stepsInstruction));
-            USBconnection.SendAxisData('2', 8226, 8226, 8226, Convert.ToInt32(interpolation.Axis[2].stepsInstruction));
+            USBconnection.SendAxisData('0', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[0].stepsInstruction));
+            USBconnection.SendAxisData('1', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[1].stepsInstruction));
+            USBconnection.SendAxisData('2', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[2].stepsInstruction));
             USBconnection.SendMoveCommand();
         }
         
@@ -252,6 +241,41 @@ namespace Projectnc1
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
+
+        private void buttonDebuggTest_Click(object sender, EventArgs e)
+        {
+            testTextbox.AppendText(USBconnection.receivedData);
+            USBconnection.receivedData = "";
+            //testTextbox.Text += Environment.NewLine;
+            //testTextbox.AppendText(USBconnection.debugI.ToString());
+            testTextbox.Text += Environment.NewLine;
+            testTextbox.AppendText(USBconnection.checkData);
+            testTextbox.Text += Environment.NewLine;
+            testTextbox.AppendText(USBconnection.checkData.Remove(0,1));
+            try
+            {
+                testTextbox.Text += Environment.NewLine;
+                testTextbox.AppendText(USBconnection.wrongData);
+            }
+            catch
+            { }
+        }
+
+        private void sendDebbug_Click(object sender, EventArgs e)
+        {
+            USBconnection.SendAccData(455);
+        }
+
+        //private void SendAccData(UInt16 acceleration)
+        //{
+        //    byte[] toSend;
+        //    toSend = new byte[2];
+
+        //    USBconnection.USBserialPort.Write("0");
+        //    USBconnection.USBserialPort.Write("a");
+        //    toSend = BitConverter.GetBytes(acceleration);
+        //    USBconnection.USBserialPort.Write(toSend, 0, 2);
+        //}
     }
 
 

@@ -82,6 +82,8 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.buttonDebuggTest = new System.Windows.Forms.Button();
+            this.sendDebbug = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.ConnectionSettings.SuspendLayout();
@@ -644,11 +646,33 @@
             this.label10.TabIndex = 0;
             this.label10.Text = "X :";
             // 
+            // buttonDebuggTest
+            // 
+            this.buttonDebuggTest.Location = new System.Drawing.Point(408, 251);
+            this.buttonDebuggTest.Name = "buttonDebuggTest";
+            this.buttonDebuggTest.Size = new System.Drawing.Size(75, 23);
+            this.buttonDebuggTest.TabIndex = 22;
+            this.buttonDebuggTest.Text = "text";
+            this.buttonDebuggTest.UseVisualStyleBackColor = true;
+            this.buttonDebuggTest.Click += new System.EventHandler(this.buttonDebuggTest_Click);
+            // 
+            // sendDebbug
+            // 
+            this.sendDebbug.Location = new System.Drawing.Point(408, 214);
+            this.sendDebbug.Name = "sendDebbug";
+            this.sendDebbug.Size = new System.Drawing.Size(75, 23);
+            this.sendDebbug.TabIndex = 23;
+            this.sendDebbug.Text = "SendDebug";
+            this.sendDebbug.UseVisualStyleBackColor = true;
+            this.sendDebbug.Click += new System.EventHandler(this.sendDebbug_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1405, 806);
+            this.Controls.Add(this.sendDebbug);
+            this.Controls.Add(this.buttonDebuggTest);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -735,6 +759,8 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button buttonDebuggTest;
+        private System.Windows.Forms.Button sendDebbug;
     }
 }
 
