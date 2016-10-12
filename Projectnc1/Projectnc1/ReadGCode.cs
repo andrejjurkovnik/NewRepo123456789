@@ -13,8 +13,6 @@ namespace Projectnc1
 
         public double[] positions;
         public int GcodeMode = 0;
-        public bool GcodeExecuting = false;
-        public int executingLine = 0;
 
         public ReadGCode(int stMotirjev)
         {
@@ -75,10 +73,5 @@ namespace Projectnc1
             return values;
 
         }
-
-
-
-
-
     }
 }

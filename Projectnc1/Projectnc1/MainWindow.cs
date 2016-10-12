@@ -28,6 +28,7 @@ namespace Projectnc1
         string[] fileContent;
         Interpolation3Axis interpolation;
         ReadGCode reader;
+        ExecuteGcode executeG;
 
         public MainWindow()
         {
@@ -43,29 +44,7 @@ namespace Projectnc1
             comboBoxBaudRate.SelectedIndex = 0;                         //Set selected Baud rate index
 
             interpolation = new Interpolation3Axis(3);
-        }
-
-        private void SendExecutingGCode()
-        {
-            try                                         //try catch loop is because we can move axis with NULL reader.GcodeExecuting
-            {
-                reader.executingLine++;
-                if (reader.executingLine == interpolation.Axis[0].steps.Length)
-                {
-                    reader.GcodeExecuting = false;
-                }
-                if (reader.GcodeExecuting)
-                {
-                    USBconnection.SendAxisData('0', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[0].steps[reader.executingLine]));
-                    USBconnection.SendAxisData('1', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[1].steps[reader.executingLine]));
-                    USBconnection.SendAxisData('2', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[2].steps[reader.executingLine]));
-                    Thread.Sleep(300);
-                    USBconnection.SendMoveCommand();
-                }
-            }
-            catch
-            { }
-        }
+        }     
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
@@ -82,7 +61,6 @@ namespace Projectnc1
                 MessageBox.Show("Connection to the machine was NOT successful", "Error");
             }
         }
-
 
         private void btnSelectGFile_Click(object sender, EventArgs e)
         {
@@ -153,21 +131,6 @@ namespace Projectnc1
                         break;
                 }
             }
-            StartExecutingGCode();
-        }
-
-        private void StartExecutingGCode()
-        {
-            reader.executingLine = 0;
-            reader.GcodeExecuting = true;
-            foreach(int a in interpolation.Axis[0].steps)
-            {
-                testTextbox.Text = testTextbox.Text + Environment.NewLine + Convert.ToString(a);
-            }
-            USBconnection.SendAxisData('0', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[0].steps[reader.executingLine]));
-            USBconnection.SendAxisData('1', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[1].steps[reader.executingLine]));
-            USBconnection.SendAxisData('2', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[2].steps[reader.executingLine]));
-            USBconnection.SendMoveCommand();
         }
 
         private void btnCOMportsRefresh_Click(object sender, EventArgs e)
@@ -240,6 +203,56 @@ namespace Projectnc1
                     break;
             }
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void StartExecutingGCode()
+        {
+            executeG.executingLine = 0;
+            executeG.GcodeExecuting = true;
+            foreach (int a in interpolation.Axis[0].steps)
+            {
+                testTextbox.Text = testTextbox.Text + Environment.NewLine + Convert.ToString(a);
+            }
+            USBconnection.SendAxisData('0', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[0].steps[executeG.executingLine]));
+            USBconnection.SendAxisData('1', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[1].steps[executeG.executingLine]));
+            USBconnection.SendAxisData('2', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[2].steps[executeG.executingLine]));
+            USBconnection.SendMoveCommand();
+        }
+
+        private void SendExecutingGCode()
+        {
+            try                                         //try catch loop is because we can move axis with NULL reader.GcodeExecuting
+            {
+                executeG.executingLine++;
+                if (executeG.executingLine == interpolation.Axis[0].steps.Length)
+                {
+                    executeG.GcodeExecuting = false;
+                }
+                if (executeG.GcodeExecuting)
+                {
+                    USBconnection.SendAxisData('0', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[0].steps[executeG.executingLine]));
+                    USBconnection.SendAxisData('1', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[1].steps[executeG.executingLine]));
+                    USBconnection.SendAxisData('2', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[2].steps[executeG.executingLine]));
+                    USBconnection.SendMoveCommand();
+                }
+            }
+            catch
+            { }
+        }
+
+        private void executeDebugButton_Click(object sender, EventArgs e)
+        {
+            executeG = new ExecuteGcode();
+            executeG.GcodeLineCompletedEvent += GlineCompletedFunction;
+            executeG.executingLine = 0;
+            executeG.GcodeExecuting = true;
+            //StartExecutingGCode();
+        }
+
+
+        private void GlineCompletedFunction(bool value)
+        {
+            MessageBox.Show("dela");
         }
     }
 }

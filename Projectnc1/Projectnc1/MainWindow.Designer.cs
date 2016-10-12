@@ -82,6 +82,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.executeDebugButton = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.ConnectionSettings.SuspendLayout();
@@ -644,11 +645,22 @@
             this.label10.TabIndex = 0;
             this.label10.Text = "X :";
             // 
+            // executeDebugButton
+            // 
+            this.executeDebugButton.Location = new System.Drawing.Point(396, 339);
+            this.executeDebugButton.Name = "executeDebugButton";
+            this.executeDebugButton.Size = new System.Drawing.Size(75, 23);
+            this.executeDebugButton.TabIndex = 22;
+            this.executeDebugButton.Text = "execute";
+            this.executeDebugButton.UseVisualStyleBackColor = true;
+            this.executeDebugButton.Click += new System.EventHandler(this.executeDebugButton_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1405, 806);
+            this.Controls.Add(this.executeDebugButton);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -735,6 +747,7 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button executeDebugButton;
     }
 }
 
