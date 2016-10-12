@@ -98,12 +98,12 @@ namespace Projectnc1
             //}
         }
 
-        public void SendSelectSlave(char axisNum)
+        private void SendSelectSlave(char axisNum)
         {
             USBserialPort.Write(axisNum.ToString());
         }
 
-        public void SendProfileData(char profilePart, UInt16 profileData)
+        private void SendProfileData(char profilePart, UInt16 profileData)
         {
             sendSteps = false;
             USBtimer.Interval = 100;
@@ -123,11 +123,11 @@ namespace Projectnc1
             USBserialPort.Write(toSend, 0, 2);
         }
 
-        public void SendStepData(Int32 steps)
+        private void SendStepData(Int32 steps)
         {
             sendSteps = true;
             USBtimer.Interval = 700;
-            //sendWithCheckComplete = false;
+            sendWithCheckComplete = false;
             checkData = steps.ToString();
             //Send s - for steeps
             USBserialPort.Write("s");
@@ -172,57 +172,24 @@ namespace Projectnc1
             SendSelectSlave(axisNum);
 
             SendProfileData('a', acceleration);
+            startTimer();
             while (!sendWithCheckComplete) ;
             SendProfileData('d', deceleration);
+            startTimer();
             while (!sendWithCheckComplete) ;
             SendProfileData('f', speed);
+            startTimer();
             while (!sendWithCheckComplete) ;
             SendStepData(steps);
+            startTimer();
+            while (!sendWithCheckComplete) ;
 
             USBserialPort.Write("c");
-            /*
-            //Send Axis Number
-            byte[] toSend;
-            toSend = new byte[2];
-
-            USBserialPort.Write(Convert.ToString(axisNum));
-
-            //Send a - for acceleration
-            USBserialPort.Write("a");
-
-            //Send acceleration value
-            toSend = BitConverter.GetBytes(acceleration);
-            USBserialPort.Write(toSend, 0, 2);
-
-            //Send d - for deceleration
-            USBserialPort.Write("d");
-
-            //Send deceleration value
-            toSend = BitConverter.GetBytes(deceleration);
-            USBserialPort.Write(toSend, 0, 2);
-
-            //Send f - for speed
-            USBserialPort.Write("f");
-
-            //Send speed value
-            toSend = BitConverter.GetBytes(speed);
-            USBserialPort.Write(toSend, 0, 2);
-
-            //Send s - for steeps
-            USBserialPort.Write("s");
-
-            //Send deceleration value
-            USBserialPort.Write(Convert.ToString(steps));
-            USBserialPort.Write("e");
-            
-            USBserialPort.Write("c");*/
         }
 
         public void SendMoveCommand()
         {
             USBserialPort.Write("m");
         }
-
-
     }
 }

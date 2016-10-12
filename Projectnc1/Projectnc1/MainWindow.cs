@@ -241,57 +241,5 @@ namespace Projectnc1
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
-
-        private void buttonDebuggTest_Click(object sender, EventArgs e)
-        {
-            USBconnection.USBserialPort.Write("0");
-            USBconnection.SendProfileData('a', 8224);
-            USBconnection.startTimer();
-            while (!USBconnection.sendWithCheckComplete) ;
-            USBconnection.SendProfileData('d', 8224);
-            USBconnection.startTimer();
-            while (!USBconnection.sendWithCheckComplete) ;
-            USBconnection.SendProfileData('f', 8224);
-            USBconnection.startTimer();
-            while (!USBconnection.sendWithCheckComplete) ;
-            USBconnection.SendStepData(-800);
-            while (!USBconnection.sendWithCheckComplete) ;
-            testTextbox.AppendText(USBconnection.dataDisplay);
-            USBconnection.USBserialPort.Write("c");
-            USBconnection.SendMoveCommand();
-        }
-
-        private void sendDebbug_Click(object sender, EventArgs e)
-        {
-            USBconnection.USBserialPort.Write("0");
-            USBconnection.SendProfileData('a',8224);
-            USBconnection.startTimer();
-            while (!USBconnection.sendWithCheckComplete) ;
-            USBconnection.SendProfileData('d', 8224);
-            USBconnection.startTimer();
-            while (!USBconnection.sendWithCheckComplete) ;
-            USBconnection.SendProfileData('f', 8224);
-            USBconnection.startTimer();
-            while (!USBconnection.sendWithCheckComplete) ;
-            USBconnection.SendStepData(800);
-            while (!USBconnection.sendWithCheckComplete) ;
-            testTextbox.AppendText(USBconnection.dataDisplay);
-            USBconnection.USBserialPort.Write("c");
-            USBconnection.SendMoveCommand();
-
-        }
-
-        //private void SendAccData(UInt16 acceleration)
-        //{
-        //    byte[] toSend;
-        //    toSend = new byte[2];
-
-        //    USBconnection.USBserialPort.Write("0");
-        //    USBconnection.USBserialPort.Write("a");
-        //    toSend = BitConverter.GetBytes(acceleration);
-        //    USBconnection.USBserialPort.Write(toSend, 0, 2);
-        //}
     }
-
-
 }
