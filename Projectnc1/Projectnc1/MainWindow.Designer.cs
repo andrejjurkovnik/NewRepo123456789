@@ -649,7 +649,7 @@
             // 
             this.executeDebugButton.Location = new System.Drawing.Point(396, 339);
             this.executeDebugButton.Name = "executeDebugButton";
-            this.executeDebugButton.Size = new System.Drawing.Size(75, 23);
+            this.executeDebugButton.Size = new System.Drawing.Size(106, 23);
             this.executeDebugButton.TabIndex = 22;
             this.executeDebugButton.Text = "execute";
             this.executeDebugButton.UseVisualStyleBackColor = true;

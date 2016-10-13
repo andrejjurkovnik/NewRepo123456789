@@ -22,14 +22,38 @@ namespace Projectnc1
         public SerialPort USBserialPort;
         public string[] portNames;
 
+        public string sendBuffer;
         public string dataDisplay;
         public string receivedData;
         public string checkData;
         public char currentProfilePart;
 
+        public delegate void bool_handler(bool value);
+
+        public bool GcodeExecuting = false;
+        public int executingLine = 0;
+
+        public event bool_handler ReadyToMoveEvent;
+
+        private bool readyMove = false;
+
+        public bool readyToMove
+        {
+            get
+            {
+                return readyMove;
+            }
+            set
+            {
+                readyMove = value;
+                ReadyToMoveEvent(readyMove);
+            }
+        }
+
         public bool sendWithCheckComplete;
         private bool sendSteps = false;
         private bool sendCheckReady = false;
+        private bool sendProfile = false;
 
         System.Timers.Timer USBtimer;
 
@@ -58,7 +82,7 @@ namespace Projectnc1
             {
                 USBserialPort.Write("R");
             }
-            else
+            else if(sendProfile)
             {
                 SendProfileData(currentProfilePart, Convert.ToUInt16(checkData));
             }
@@ -84,7 +108,8 @@ namespace Projectnc1
                 sendWithCheckComplete = true;
                 if(sendCheckReady)
                 {
-                    
+                    sendCheckReady = false;
+                    readyToMove = true;
                 }
             }
 
@@ -100,15 +125,11 @@ namespace Projectnc1
                 {
                     USBserialPort.Write("R");
                 }
-                else
+                else if(sendProfile)
                 {
                     SendProfileData(currentProfilePart, Convert.ToUInt16(checkData));
                 }
             }
-            //if (USBconnection.USBserialPort.ReadChar() == 'r')
-            //{
-            //    SendExecutingGCode();
-            //}
         }
 
         private void SendSelectSlave(char axisNum)
@@ -120,7 +141,8 @@ namespace Projectnc1
         {
             sendSteps = false;
             sendCheckReady = false;
-            USBtimer.Interval = 100;
+            sendProfile = true;
+            USBtimer.Interval = 1000;
             sendWithCheckComplete = false;
             byte[] toSend;
             toSend = new byte[2];
@@ -140,8 +162,9 @@ namespace Projectnc1
 
         private void SendStepData(Int32 steps)
         {
-            sendSteps = true;
+            sendProfile = false;
             sendCheckReady = false;
+            sendSteps = true;
             USBtimer.Interval = 700;
             sendWithCheckComplete = false;
             checkData = steps.ToString();
@@ -202,6 +225,8 @@ namespace Projectnc1
 
         public void SendMoveCommand()
         {
+            readyToMove = false;
+            sendProfile = false;
             sendSteps = false;
             sendCheckReady = true;
             USBtimer.Interval = 300;

@@ -28,7 +28,6 @@ namespace Projectnc1
         string[] fileContent;
         Interpolation3Axis interpolation;
         ReadGCode reader;
-        ExecuteGcode executeG;
 
         public MainWindow()
         {
@@ -37,6 +36,7 @@ namespace Projectnc1
 
             //Set up connection object
             USBconnection = new ConnectionUSB();                        //Set up connection with default settings
+            USBconnection.ReadyToMoveEvent += GlineCompletedFunction;
             comboBoxCOMports.Items.Add("Please select...");             //Add "Pleas select..." item to the combo box           
             comboBoxCOMports.Items.AddRange(USBconnection.portNames);   //Add Found port names to the combo box
             comboBoxCOMports.SelectedIndex = 0;                         //Set selected COMport index
@@ -207,15 +207,12 @@ namespace Projectnc1
 
         private void StartExecutingGCode()
         {
-            executeG.executingLine = 0;
-            executeG.GcodeExecuting = true;
-            foreach (int a in interpolation.Axis[0].steps)
-            {
-                testTextbox.Text = testTextbox.Text + Environment.NewLine + Convert.ToString(a);
-            }
-            USBconnection.SendAxisData('0', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[0].steps[executeG.executingLine]));
-            USBconnection.SendAxisData('1', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[1].steps[executeG.executingLine]));
-            USBconnection.SendAxisData('2', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[2].steps[executeG.executingLine]));
+            reader.executingLine = 0;
+            reader.GcodeExecuting = true;
+
+            USBconnection.SendAxisData('0', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[0].steps[reader.executingLine]));
+            USBconnection.SendAxisData('1', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[1].steps[reader.executingLine]));
+            USBconnection.SendAxisData('2', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[2].steps[reader.executingLine]));
             USBconnection.SendMoveCommand();
         }
 
@@ -223,16 +220,16 @@ namespace Projectnc1
         {
             try                                         //try catch loop is because we can move axis with NULL reader.GcodeExecuting
             {
-                executeG.executingLine++;
-                if (executeG.executingLine == interpolation.Axis[0].steps.Length)
+                reader.executingLine++;
+                if (reader.executingLine == interpolation.Axis[0].steps.Length)
                 {
-                    executeG.GcodeExecuting = false;
+                    reader.GcodeExecuting = false;
                 }
-                if (executeG.GcodeExecuting)
+                if (reader.GcodeExecuting)
                 {
-                    USBconnection.SendAxisData('0', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[0].steps[executeG.executingLine]));
-                    USBconnection.SendAxisData('1', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[1].steps[executeG.executingLine]));
-                    USBconnection.SendAxisData('2', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[2].steps[executeG.executingLine]));
+                    USBconnection.SendAxisData('0', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[0].steps[reader.executingLine]));
+                    USBconnection.SendAxisData('1', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[1].steps[reader.executingLine]));
+                    USBconnection.SendAxisData('2', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[2].steps[reader.executingLine]));
                     USBconnection.SendMoveCommand();
                 }
             }
@@ -242,17 +239,27 @@ namespace Projectnc1
 
         private void executeDebugButton_Click(object sender, EventArgs e)
         {
-            executeG = new ExecuteGcode();
-            executeG.GcodeLineCompletedEvent += GlineCompletedFunction;
-            executeG.executingLine = 0;
-            executeG.GcodeExecuting = true;
-            //StartExecutingGCode();
+            //USBconnection.readyToMove = true;
+            StartExecutingGCode();
         }
-
 
         private void GlineCompletedFunction(bool value)
         {
-            MessageBox.Show("dela");
+            if (USBconnection.readyToMove == true)
+            {
+                MessageBox.Show("move completed");
+                try
+                {
+                    if (reader.GcodeExecuting)
+                    {
+                        SendExecutingGCode();
+                    }
+                }
+                catch
+                {
+
+                }
+            }
         }
     }
 }

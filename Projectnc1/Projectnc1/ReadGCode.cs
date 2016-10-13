@@ -11,6 +11,9 @@ namespace Projectnc1
     class ReadGCode
     {
 
+        public bool GcodeExecuting = false;
+        public int executingLine = 0;
+
         public double[] positions;
         public int GcodeMode = 0;
 
