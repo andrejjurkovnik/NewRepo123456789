@@ -21,17 +21,92 @@ namespace Projectnc1
     {
         public SerialPort USBserialPort;
         public string[] portNames;
+        System.Timers.Timer USBtimer;
+
+        public bool sendAndCheck = true;                            //not needed at the moment
 
         public string sendBuffer;
         public string dataDisplay;
-        public string receivedData;
-        public string checkData;
-        public char currentProfilePart;
+        private string receivedData;
+        public bool readyForMoveCmd = false;
+
+        public struct send
+        {
+            public int sendBufferIndex;                             //Index of transmit buffer
+            public int sendBufferLength;                            //Length of current outgoing transmision
+            public string[] check;                                  //String to compare with incoming data
+            public int[] numberCheckBytes;                          //Number of bytes to be checked
+            public int numberOfAllTransmisions;                     //Number of all transmisons to be made, counting from 0
+            public int numberOfTransmisions;                        //Number of transmisions already complete
+        }
+
+        public send sendData;
+
+        public ConnectionUSB(int baudRate = 9600)
+        {
+            USBtimer = new System.Timers.Timer();                   //Timer for USB error check
+            USBtimer.Elapsed += new ElapsedEventHandler(USBTimeout);
+            USBtimer.Interval = 100;                                //Timer interval set to 100ms
+            //Set up Serial port properties
+            USBserialPort = new SerialPort();                       //Create Serial port object      
+            USBserialPort.BaudRate = baudRate;
+            portNames = SerialPort.GetPortNames();                  //Gets all the available COM-ports 
+            USBserialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
+            sendData.numberOfAllTransmisions = 3;
+            sendData.numberCheckBytes = new int[5];
+            sendData.check = new string[4];
+        }
+
+        private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
+        {
+            receivedData = receivedData + USBserialPort.ReadExisting();
+
+            USBtimer.Stop();
+            USBtimer.Start();
+
+            if (receivedData.Length == sendData.numberCheckBytes[sendData.numberOfTransmisions])
+            {
+                if (receivedData == sendData.check[sendData.numberOfTransmisions])
+                {
+                    USBtimer.Stop();
+                    dataDisplay = receivedData;
+                    receivedData = "";
+                    sendData.numberOfTransmisions++;
+
+                    if(sendData.numberOfTransmisions < sendData.numberOfAllTransmisions)
+                    {
+                        sendData.sendBufferIndex = sendData.sendBufferIndex + 3;
+                        StartTransmit(sendData.sendBufferIndex, sendData.sendBufferLength);
+                    }
+                    else if(sendData.numberOfTransmisions == sendData.numberOfAllTransmisions)          //last transmission, steps
+                    {
+                        sendData.sendBufferIndex = sendData.sendBufferIndex + 3;
+                        sendData.sendBufferLength = sendBuffer.Length - (sendData.numberOfAllTransmisions * sendData.sendBufferLength);//auto send "c"
+                        StartTransmit(sendData.sendBufferIndex, sendData.sendBufferLength);
+                    }
+                    else if(sendData.numberOfTransmisions == (sendData.numberOfAllTransmisions + 1))
+                    {
+                        USBserialPort.Write("c");
+                        sendData.numberOfTransmisions = 0;
+                        readyForMoveCmd = true;
+                        USBtimer.Stop();
+                    }
+                    else
+                    {
+                        sendData.sendBufferIndex = 0;
+                        sendData.sendBufferLength = 3;
+                    }
+                }
+
+                //else if (receivedData != sendData.check[sendData.numberOfTransmisions])//is that needed, timer is more secure option
+                //{
+                //    receivedData = "";
+                //    StartTransmit(sendData.sendBufferIndex, sendData.sendBufferLength);
+                //}
+            }
+        }
 
         public delegate void bool_handler(bool value);
-
-        public bool GcodeExecuting = false;
-        public int executingLine = 0;
 
         public event bool_handler ReadyToMoveEvent;
 
@@ -50,86 +125,12 @@ namespace Projectnc1
             }
         }
 
-        public bool sendWithCheckComplete;
-        private bool sendSteps = false;
-        private bool sendCheckReady = false;
-        private bool sendProfile = false;
-
-        System.Timers.Timer USBtimer;
-
-        public ConnectionUSB(int baudRate = 9600)
-        {
-            USBtimer = new System.Timers.Timer();                   //Timer for USB error check
-            USBtimer.Elapsed += new ElapsedEventHandler(USBTimeout);
-            USBtimer.Interval = 100;                                //Timer interval set to 100ms
-            //Set up Serial port properties
-            USBserialPort = new SerialPort();                       //Create Serial port object      
-            USBserialPort.BaudRate = baudRate;
-            portNames = SerialPort.GetPortNames();                  //Gets all the available COM-ports 
-            USBserialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
-        }
-
         private void USBTimeout(object sender, ElapsedEventArgs e)
         {
             USBtimer.Stop();
             //MessageBox.Show("fail timer");
             receivedData = "";
-            if (sendSteps)
-            {
-                SendStepData(Convert.ToInt32(checkData));
-            }
-            else if (sendCheckReady)
-            {
-                USBserialPort.Write("R");
-            }
-            else if(sendProfile)
-            {
-                SendProfileData(currentProfilePart, Convert.ToUInt16(checkData));
-            }
-        }
-
-        public void startTimer()
-        {
-            USBtimer.Start();
-        }
-
-        private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
-        {
-            receivedData = receivedData + USBserialPort.ReadExisting();
-
-            USBtimer.Stop();
-            USBtimer.Start();
-
-            if (receivedData == checkData)
-            {
-                USBtimer.Stop();
-                dataDisplay = receivedData;
-                receivedData = "";
-                sendWithCheckComplete = true;
-                if(sendCheckReady)
-                {
-                    sendCheckReady = false;
-                    readyToMove = true;
-                }
-            }
-
-            if (receivedData != checkData && receivedData.Length == checkData.Length)
-            {
-                USBtimer.Stop();
-                receivedData = "";
-                if(sendSteps)
-                {
-                    SendStepData(Convert.ToInt32(checkData));
-                }
-                else if(sendCheckReady)
-                {
-                    USBserialPort.Write("R");
-                }
-                else if(sendProfile)
-                {
-                    SendProfileData(currentProfilePart, Convert.ToUInt16(checkData));
-                }
-            }
+            StartTransmit(sendData.sendBufferIndex, sendData.sendBufferLength);
         }
 
         private void SendSelectSlave(char axisNum)
@@ -137,44 +138,25 @@ namespace Projectnc1
             USBserialPort.Write(axisNum.ToString());
         }
 
-        private void SendProfileData(char profilePart, UInt16 profileData)
+        public void SendProfileData(char profilePart, UInt16 profileData)
         {
-            sendSteps = false;
-            sendCheckReady = false;
-            sendProfile = true;
-            USBtimer.Interval = 1000;
-            sendWithCheckComplete = false;
-            byte[] toSend;
+            byte[] toSend;                                                       //data to send
             toSend = new byte[2];
-
-            checkData = profileData.ToString();
-            currentProfilePart = profilePart;
 
             //Send a - for acceleration
             //Send d - for deceleration
             //Send f - for speed
-            USBserialPort.Write(profilePart.ToString());
-            //send data
             toSend = BitConverter.GetBytes(profileData);
-            USBserialPort.Write(toSend, 0, 2);
-            startTimer();
+            sendBuffer += profilePart.ToString();                               //profile part + data
+            foreach (byte byt in toSend)
+            {
+                sendBuffer += Convert.ToString((char)byt);
+            }
         }
 
         private void SendStepData(Int32 steps)
         {
-            sendProfile = false;
-            sendCheckReady = false;
-            sendSteps = true;
-            USBtimer.Interval = 700;
-            sendWithCheckComplete = false;
-            checkData = steps.ToString();
-            //Send s - for steeps
-            USBserialPort.Write("s");
-            //send steps value
-            USBserialPort.Write(Convert.ToString(steps));
-            //confirm steps value
-            USBserialPort.Write("e");
-            startTimer();
+            sendBuffer += "s" + Convert.ToString(steps) + "e";                  //Send 's' for steeps + send steps value + 'e' confirm steps value
         }
 
         public bool ConnectUSB(int baudRate, string COMport)
@@ -209,31 +191,55 @@ namespace Projectnc1
 
         public void SendAxisData(char axisNum, UInt16 acceleration, UInt16 deceleration, UInt16 speed, Int32 steps)
         {
+            sendBuffer = "";
+            sendData.numberOfTransmisions = 0;
+            readyForMoveCmd = false;
+
             SendSelectSlave(axisNum);
 
             SendProfileData('a', acceleration);
-            while (!sendWithCheckComplete) ;
-            SendProfileData('d', deceleration);
-            while (!sendWithCheckComplete) ;
-            SendProfileData('f', speed);
-            while (!sendWithCheckComplete) ;
-            SendStepData(steps);
-            while (!sendWithCheckComplete) ;
 
-            USBserialPort.Write("c");                   //Complete slave data
+            SendProfileData('d', deceleration);
+
+            SendProfileData('f', speed);
+
+            SendStepData(steps);
+            sendData.sendBufferIndex = 0;
+            sendData.sendBufferLength = 3;
+
+            sendData.numberCheckBytes[0] = acceleration.ToString().Length;
+            sendData.numberCheckBytes[1] = deceleration.ToString().Length;
+            sendData.numberCheckBytes[2] = speed.ToString().Length;
+            sendData.numberCheckBytes[3] = steps.ToString().Length;
+            sendData.numberCheckBytes[4] = 1;
+
+            sendData.check[0] = acceleration.ToString();
+            sendData.check[1] = deceleration.ToString();
+            sendData.check[2] = speed.ToString();
+            sendData.check[3] = steps.ToString();
+
+            USBtimer.Interval = 400;
+
+            StartTransmit(sendData.sendBufferIndex,sendData.sendBufferLength);
+
+            USBtimer.Start();
+
+            //USBserialPort.Write("c");                                           //Complete slave data
+        }
+
+        private void StartTransmit(int startIndex, int length)
+        {
+            USBserialPort.Write(sendBuffer.Substring(startIndex, length));
+            //USBtimer.Start();
         }
 
         public void SendMoveCommand()
         {
             readyToMove = false;
-            sendProfile = false;
-            sendSteps = false;
-            sendCheckReady = true;
             USBtimer.Interval = 300;
-            sendWithCheckComplete = false;
-            checkData = "r";
+            //checkData = "r";
             USBserialPort.Write("m");
-            startTimer();
+            //USBtimer.Start();
         }
     }
 }

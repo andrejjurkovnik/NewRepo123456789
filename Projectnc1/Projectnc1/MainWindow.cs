@@ -178,8 +178,11 @@ namespace Projectnc1
             }
             interpolation.rapidPositioning(movePositions);
             USBconnection.SendAxisData('0', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[0].stepsInstruction));
+            while (!USBconnection.readyForMoveCmd) ;
             USBconnection.SendAxisData('1', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[1].stepsInstruction));
+            while (!USBconnection.readyForMoveCmd) ;
             USBconnection.SendAxisData('2', 8224, 8224, 8224, Convert.ToInt32(interpolation.Axis[2].stepsInstruction));
+            while (!USBconnection.readyForMoveCmd) ;
             USBconnection.SendMoveCommand();
         }
         
@@ -239,8 +242,11 @@ namespace Projectnc1
 
         private void executeDebugButton_Click(object sender, EventArgs e)
         {
-            //USBconnection.readyToMove = true;
-            StartExecutingGCode();
+            USBconnection.SendAxisData('0', 8224, 8224, 8224, 800);
+            while (!USBconnection.readyForMoveCmd) ;
+            USBconnection.SendAxisData('1', 8224, 8224, 8224, 800);
+            while (!USBconnection.readyForMoveCmd) ;
+            USBconnection.SendMoveCommand();
         }
 
         private void GlineCompletedFunction(bool value)
