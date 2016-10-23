@@ -36,7 +36,7 @@ namespace Projectnc1
             public int sendBufferLength;                            //Length of current outgoing transmision
             public string[] check;                                  //String to compare with incoming data
             public int[] numberCheckBytes;                          //Number of bytes to be checked
-            public int numberOfAllTransmisions;                     //Number of all transmisons to be made, counting from 0
+            public int numberOfAllTransmisions;                     //Number of all transmisons to be made
             public int numberOfTransmisions;                        //Number of transmisions already complete
         }
 
@@ -52,7 +52,7 @@ namespace Projectnc1
             USBserialPort.BaudRate = baudRate;
             portNames = SerialPort.GetPortNames();                  //Gets all the available COM-ports 
             USBserialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
-            sendData.numberOfAllTransmisions = 3;
+            sendData.numberOfAllTransmisions = 4;
             sendData.numberCheckBytes = new int[5];
             sendData.check = new string[4];
         }
@@ -75,26 +75,16 @@ namespace Projectnc1
 
                     if(sendData.numberOfTransmisions < sendData.numberOfAllTransmisions)
                     {
-                        sendData.sendBufferIndex = sendData.sendBufferIndex + 3;
+                        sendData.sendBufferIndex += sendData.numberCheckBytes[sendData.numberOfTransmisions - 1] + 2;
+                        sendData.sendBufferLength = sendData.numberCheckBytes[sendData.numberOfTransmisions] + 2;
                         StartTransmit(sendData.sendBufferIndex, sendData.sendBufferLength);
                     }
-                    else if(sendData.numberOfTransmisions == sendData.numberOfAllTransmisions)          //last transmission, steps
-                    {
-                        sendData.sendBufferIndex = sendData.sendBufferIndex + 3;
-                        sendData.sendBufferLength = sendBuffer.Length - (sendData.numberOfAllTransmisions * sendData.sendBufferLength);//auto send "c"
-                        StartTransmit(sendData.sendBufferIndex, sendData.sendBufferLength);
-                    }
-                    else if(sendData.numberOfTransmisions == (sendData.numberOfAllTransmisions + 1))
+                    else if(sendData.numberOfTransmisions == sendData.numberOfAllTransmisions)
                     {
                         USBserialPort.Write("c");
                         sendData.numberOfTransmisions = 0;
                         readyForMoveCmd = true;
                         USBtimer.Stop();
-                    }
-                    else
-                    {
-                        sendData.sendBufferIndex = 0;
-                        sendData.sendBufferLength = 3;
                     }
                 }
 
@@ -133,28 +123,20 @@ namespace Projectnc1
             StartTransmit(sendData.sendBufferIndex, sendData.sendBufferLength);
         }
 
-        private void SendSelectSlave(char axisNum)
+        public void SendSelectSlave(char axisNum)
         {
             USBserialPort.Write(axisNum.ToString());
         }
 
         public void SendProfileData(char profilePart, UInt16 profileData)
         {
-            byte[] toSend;                                                       //data to send
-            toSend = new byte[2];
-
             //Send a - for acceleration
             //Send d - for deceleration
             //Send f - for speed
-            toSend = BitConverter.GetBytes(profileData);
-            sendBuffer += profilePart.ToString();                               //profile part + data
-            foreach (byte byt in toSend)
-            {
-                sendBuffer += Convert.ToString((char)byt);
-            }
+            sendBuffer += Convert.ToString(profilePart) + Convert.ToString(profileData) + "e";
         }
 
-        private void SendStepData(Int32 steps)
+        public void SendStepData(Int32 steps)
         {
             sendBuffer += "s" + Convert.ToString(steps) + "e";                  //Send 's' for steeps + send steps value + 'e' confirm steps value
         }
@@ -204,8 +186,6 @@ namespace Projectnc1
             SendProfileData('f', speed);
 
             SendStepData(steps);
-            sendData.sendBufferIndex = 0;
-            sendData.sendBufferLength = 3;
 
             sendData.numberCheckBytes[0] = acceleration.ToString().Length;
             sendData.numberCheckBytes[1] = deceleration.ToString().Length;
@@ -218,19 +198,18 @@ namespace Projectnc1
             sendData.check[2] = speed.ToString();
             sendData.check[3] = steps.ToString();
 
+            sendData.sendBufferIndex = 0;
+            sendData.sendBufferLength = sendData.numberCheckBytes[0] + 2;
+
             USBtimer.Interval = 400;
 
             StartTransmit(sendData.sendBufferIndex,sendData.sendBufferLength);
-
-            USBtimer.Start();
-
-            //USBserialPort.Write("c");                                           //Complete slave data
         }
 
         private void StartTransmit(int startIndex, int length)
         {
             USBserialPort.Write(sendBuffer.Substring(startIndex, length));
-            //USBtimer.Start();
+            USBtimer.Start();
         }
 
         public void SendMoveCommand()

@@ -37,6 +37,7 @@ namespace Projectnc1
             //Set up connection object
             USBconnection = new ConnectionUSB();                        //Set up connection with default settings
             USBconnection.ReadyToMoveEvent += GlineCompletedFunction;
+
             comboBoxCOMports.Items.Add("Please select...");             //Add "Pleas select..." item to the combo box           
             comboBoxCOMports.Items.AddRange(USBconnection.portNames);   //Add Found port names to the combo box
             comboBoxCOMports.SelectedIndex = 0;                         //Set selected COMport index
@@ -242,11 +243,14 @@ namespace Projectnc1
 
         private void executeDebugButton_Click(object sender, EventArgs e)
         {
-            USBconnection.SendAxisData('0', 8224, 8224, 8224, 800);
-            while (!USBconnection.readyForMoveCmd) ;
-            USBconnection.SendAxisData('1', 8224, 8224, 8224, 800);
-            while (!USBconnection.readyForMoveCmd) ;
-            USBconnection.SendMoveCommand();
+            //USBconnection.SendAxisData('0', 8224, 8224, 8224, 800);
+            //while (!USBconnection.readyForMoveCmd) ;
+            //USBconnection.SendMoveCommand();
+            USBconnection.SendSelectSlave('0');
+            USBconnection.SendProfileData('a', 8224);
+            USBconnection.SendProfileData('d', 8224);
+            USBconnection.SendProfileData('f', 8224);
+            USBconnection.SendStepData(800);
         }
 
         private void GlineCompletedFunction(bool value)
@@ -254,17 +258,17 @@ namespace Projectnc1
             if (USBconnection.readyToMove == true)
             {
                 MessageBox.Show("move completed");
-                try
-                {
-                    if (reader.GcodeExecuting)
-                    {
-                        SendExecutingGCode();
-                    }
-                }
-                catch
-                {
+                //    try
+                //    {
+                //        if (reader.GcodeExecuting)
+                //        {
+                //            SendExecutingGCode();
+                //        }
+                //    }
+                //    catch
+                //    {
 
-                }
+                //    }
             }
         }
     }
