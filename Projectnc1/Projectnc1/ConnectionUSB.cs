@@ -51,7 +51,7 @@ namespace Projectnc1
         }
 
         public bool sendWithCheckComplete;
-        private bool sendSteps = true;
+        private bool sendSteps = false;
         private bool sendCheckReady = false;
         private bool sendProfile = false;
 
