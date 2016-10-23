@@ -79,6 +79,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadGCode.cs" />
+    <Compile Include="USB_MCP2200.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="ConnectionUSBsettings.resx">
       <DependentUpon>ConnectionUSBsettings.cs</DependentUpon>
     </EmbeddedResource>
